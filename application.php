@@ -844,9 +844,6 @@
       <button class="tab-btn" onclick="openTab('preview-tab')">
         <i class="fas fa-file-alt"></i> Cover Letter Preview
       </button>
-      <button class="tab-btn" onclick="openTab('air-ticket-tab')">
-        <i class="fas fa-plane"></i> Air Ticket Info
-      </button>
     </div>
 
     <!-- Form Tab -->
@@ -1276,80 +1273,6 @@
       </form>
     </div>
 
-    <!-- Air Ticket Tab -->
-    <div id="air-ticket-tab" class="tab-content">
-      <div class="form-section">
-        <h2 class="section-title"><i class="fas fa-plane"></i> Air Ticket Information</h2>
-
-        <!-- Flight Details -->
-        <div class="form-grid">
-          <div class="input-group">
-            <label for="airlinePNR" class="required">Airline PNR</label>
-            <input type="text" id="airlinePNR" required placeholder="53N2L7 (TG - THAI)" oninput="saveToLocalStorage()">
-          </div>
-          <div class="input-group">
-            <label for="galileoPNR" class="required">Galileo PNR</label>
-            <input type="text" id="galileoPNR" required placeholder="CF59P0" oninput="saveToLocalStorage()">
-          </div>
-          <div class="input-group">
-            <label for="dateOfIssue" class="required">Date of Issue</label>
-            <input type="date" id="dateOfIssue" required onchange="saveToLocalStorage()">
-          </div>
-        </div>
-
-        <!-- Passenger Table -->
-        <h3 style="margin: 20px 0 10px 0; color: #0d47a1;">Passenger Information</h3>
-        <table class="air-ticket-table">
-          <thead>
-            <tr>
-              <th>Passenger Information</th>
-              <th>Passport Number</th>
-              <th>Frequent Flyer Number</th>
-              <th>Ticket</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="airTicketTableBody">
-            <!-- Passengers will be added here -->
-          </tbody>
-        </table>
-        <button type="button" class="add-btn" onclick="addAirTicketPassenger()">
-          <i class="fas fa-plus"></i> Add Passenger
-        </button>
-
-        <!-- Flight Itinerary -->
-        <h3 style="margin: 30px 0 10px 0; color: #0d47a1;">Flight Itinerary</h3>
-        <table class="air-ticket-table">
-          <thead>
-            <tr>
-              <th>Airline</th>
-              <th>From</th>
-              <th>To</th>
-              <th>Depart</th>
-              <th>Arrive</th>
-              <th>Class</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody id="flightItineraryTableBody">
-            <!-- Flight details will be added here -->
-          </tbody>
-        </table>
-        <button type="button" class="add-btn" onclick="addFlightItinerary()">
-          <i class="fas fa-plus"></i> Add Flight
-        </button>
-      </div>
-
-      <div class="actions">
-        <button class="btn btn-secondary" onclick="openTab('form-tab')">
-          <i class="fas fa-arrow-left"></i> Back to Form
-        </button>
-        <button class="btn" onclick="openTab('preview-tab')">
-          <i class="fas fa-file-alt"></i> Preview Letter
-        </button>
-      </div>
-    </div>
-
     <!-- Preview Tab with Enhanced Editor -->
     <div id="preview-tab" class="tab-content">
       <!-- Filename Input -->
@@ -1680,8 +1603,6 @@
         galileoPNR: document.getElementById('galileoPNR').value,
         dateOfIssue: document.getElementById('dateOfIssue').value,
         participants: [],
-        airTicketPassengers: [],
-        flightItineraries: []
       };
 
       // Collect participants data
@@ -1819,7 +1740,6 @@
       if (formData.airTicketPassengers && formData.airTicketPassengers.length > 0) {
         document.getElementById('airTicketTableBody').innerHTML = '';
         formData.airTicketPassengers.forEach(passenger => {
-          addAirTicketPassenger();
           const rows = document.querySelectorAll('#airTicketTableBody tr');
           const lastRow = rows[rows.length - 1];
           lastRow.querySelector('.air-ticket-name').value = passenger.name || '';
@@ -1833,7 +1753,6 @@
       if (formData.flightItineraries && formData.flightItineraries.length > 0) {
         document.getElementById('flightItineraryTableBody').innerHTML = '';
         formData.flightItineraries.forEach(flight => {
-          addFlightItinerary();
           const rows = document.querySelectorAll('#flightItineraryTableBody tr');
           const lastRow = rows[rows.length - 1];
           lastRow.querySelector('.flight-airline').value = flight.airline || '';
@@ -1928,104 +1847,6 @@
       saveToLocalStorage();
     }
 
-    // Air ticket passengers management
-    function addAirTicketPassenger() {
-      airTicketPassengerCount++;
-      const tableBody = document.getElementById('airTicketTableBody');
-      const row = document.createElement('tr');
-
-      row.innerHTML = `
-                <td><input type="text" placeholder="Passenger Name" class="air-ticket-name" required oninput="saveToLocalStorage()" value="${airTicketPassengerCount === 1 ? 'John Doe' : ''}"></td>
-                <td><input type="text" placeholder="Passport No." class="air-ticket-passport" required oninput="saveToLocalStorage()" value="${airTicketPassengerCount === 1 ? 'AB1234567' : ''}"></td>
-                <td><input type="text" placeholder="Frequent Flyer No." class="air-ticket-ffn" oninput="saveToLocalStorage()"></td>
-                <td><input type="text" placeholder="Ticket Number" class="air-ticket-number" oninput="saveToLocalStorage()"></td>
-                <td><button type="button" class="remove-btn" onclick="removeAirTicketPassenger(this)"><i class="fas fa-trash"></i></button></td>
-            `;
-
-      tableBody.appendChild(row);
-      updateCompletion();
-    }
-
-    function removeAirTicketPassenger(button) {
-      const row = button.closest('tr');
-      row.remove();
-      updateCompletion();
-      saveToLocalStorage();
-    }
-
-    // Flight itinerary management
-    function addFlightItinerary() {
-      flightItineraryCount++;
-      const tableBody = document.getElementById('flightItineraryTableBody');
-      const row = document.createElement('tr');
-
-      row.innerHTML = `
-                <td>
-                    <select class="flight-airline" required onchange="saveToLocalStorage()">
-                        <option value="">Select Airline</option>
-                        <option value="THAI" selected>THAI</option>
-                        <option value="Biman Bangladesh">Biman Bangladesh</option>
-                        <option value="Emirates">Emirates</option>
-                        <option value="Qatar Airways">Qatar Airways</option>
-                    </select>
-                </td>
-                <td><input type="text" placeholder="Departure City" class="flight-from" required oninput="saveToLocalStorage()" value="${flightItineraryCount === 1 ? 'Dhaka - Hazrat Shahjalal Intl Arpt, Terminal 2' : ''}"></td>
-                <td><input type="text" placeholder="Arrival City" class="flight-to" required oninput="saveToLocalStorage()" value="${flightItineraryCount === 1 ? 'Bangkok - Suvarnabhumi Intl Arpt' : ''}"></td>
-                <td><input type="datetime-local" class="flight-depart" required onchange="saveToLocalStorage()"></td>
-                <td><input type="datetime-local" class="flight-arrive" required onchange="saveToLocalStorage()"></td>
-                <td>
-                    <select class="flight-class" required onchange="saveToLocalStorage()">
-                        <option value="">Select Class</option>
-                        <option value="W-Economy" selected>W-Economy</option>
-                        <option value="Economy">Economy</option>
-                        <option value="Business">Business</option>
-                        <option value="First">First</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="flight-status" required onchange="saveToLocalStorage()">
-                        <option value="">Select Status</option>
-                        <option value="Confirmed" selected>Confirmed</option>
-                        <option value="Waitlisted">Waitlisted</option>
-                        <option value="Pending">Pending</option>
-                    </select>
-                </td>
-            `;
-
-      tableBody.appendChild(row);
-
-      // Set default dates for the first flight
-      if (flightItineraryCount === 1) {
-        setTimeout(() => {
-          const departInputs = document.querySelectorAll('.flight-depart');
-          const arriveInputs = document.querySelectorAll('.flight-arrive');
-
-          if (departInputs[0]) {
-            const departDate = new Date();
-            departDate.setDate(departDate.getDate() + 7);
-            departDate.setHours(2, 45, 0);
-            departInputs[0].value = departDate.toISOString().slice(0, 16);
-          }
-
-          if (arriveInputs[0]) {
-            const arriveDate = new Date();
-            arriveDate.setDate(arriveDate.getDate() + 7);
-            arriveDate.setHours(6, 15, 0);
-            arriveInputs[0].value = arriveDate.toISOString().slice(0, 16);
-          }
-        }, 100);
-      }
-
-      updateCompletion();
-    }
-
-    function removeFlightItinerary(button) {
-      const row = button.closest('tr');
-      row.remove();
-      updateCompletion();
-      saveToLocalStorage();
-    }
-
     // Update completion indicator
     function updateCompletion() {
       const requiredFields = document.querySelectorAll('[required]');
@@ -2096,8 +1917,6 @@
         originalAirlinePNR = '';
         originalGalileoPNR = '';
         participantCount = 0;
-        airTicketPassengerCount = 0;
-        flightItineraryCount = 0;
 
         toggleProfessionFields();
         toggleCountryVisitFields();
@@ -2536,10 +2355,6 @@
 
       // Add sample participant
       addParticipant();
-
-      // Add sample air ticket passenger and flight itinerary
-      addAirTicketPassenger();
-      addFlightItinerary();
 
       // Set default values for sample participant
       setTimeout(() => {

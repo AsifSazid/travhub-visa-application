@@ -1083,12 +1083,12 @@ try {
                                                 </div>
                                             </div>
                                             <div class="flex justify-end items-center">
-                                                <button class="view-app-btn bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-medium py-3.5 px-5 rounded-xl transition duration-300 flex items-center justify-center action-btn"
-                                                        onclick="downloadTicket('${application.uuid}')" 
+                                                <a class="view-app-btn bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-medium py-3.5 px-5 rounded-xl transition duration-300 flex items-center justify-center action-btn"
+                                                        href="download_ticket.php?pnr=${application.uuid}" 
                                                         title="Download Ticket">
                                                     <i class="fa-solid fa-download mr-3"></i>
                                                     <span>Download Ticket</span>
-                                                </button>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -1291,7 +1291,7 @@ try {
             const appData = localStorage.getItem(`visaForm_${uuid}`);
             if (appData) {
                 // Redirect to Thai visa generator with UUID parameter
-                window.location.href = `thai-visa-generator.html?uuid=${encodeURIComponent(uuid)}`;
+                window.location.href = `application.php?uuid=${encodeURIComponent(uuid)}`;
             } else {
                 // Check in database applications
                 const app = applications.find(a => a.uuid === uuid && a.source !== 'local');
@@ -1308,7 +1308,7 @@ try {
         // Create a new application
         function createNewApplication() {
             // Redirect to Thai visa generator without parameters for new application
-            window.location.href = 'thai-visa-generator.html';
+            window.location.href = 'application.php';
         }
 
         // Delete an application
@@ -1330,12 +1330,7 @@ try {
             renderApplications();
             updateStats();
         }
-
-        function downloadTicket(uuid)
-        {   
-            console.log(uuid);
-            
-        }
+        
     </script>
 </body>
 
