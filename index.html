@@ -1,0 +1,2288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thai Visa Cover Letter Generator</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f8f9fc 0%, #e2e8f0 100%);
+      min-height: 100vh;
+      padding: 20px;
+      color: #2d3748;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+    }
+
+    header {
+      background: linear-gradient(90deg, #0d47a1 0%, #1e88e5 100%);
+      color: white;
+      padding: 25px 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+      background-size: cover;
+      opacity: 0.3;
+    }
+
+    header h1 {
+      font-size: 2.4rem;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      position: relative;
+      z-index: 2;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      opacity: 0.95;
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .tabs {
+      display: flex;
+      background: #e3f2fd;
+      border-bottom: 1px solid #bbdefb;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 18px;
+      background: none;
+      border: none;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: #0d47a1;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+    }
+
+    .tab-btn:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: transparent;
+      transition: all 0.3s ease;
+    }
+
+    .tab-btn.active {
+      background: #1e88e5;
+      color: white;
+    }
+
+    .tab-btn.active:after {
+      background: #ffc107;
+    }
+
+    .tab-btn:hover:not(.active) {
+      background: #bbdefb;
+    }
+
+    .tab-content {
+      display: none;
+      padding: 30px;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .form-section {
+      margin-bottom: 30px;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 25px;
+    }
+
+    .form-section:last-child {
+      border-bottom: none;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      color: #0d47a1;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #bbdefb;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #2d3748;
+    }
+
+    .required:after {
+      content: " *";
+      color: #e53935;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #cbd5e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: #f7fafc;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #1e88e5;
+      box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.2);
+      background: white;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .btn {
+      padding: 14px 28px;
+      background: #1e88e5;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 6px rgba(30, 136, 229, 0.3);
+    }
+
+    .btn:hover {
+      background: #0d47a1;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(13, 71, 161, 0.25);
+    }
+
+    .btn-secondary {
+      background: #718096;
+    }
+
+    .btn-secondary:hover {
+      background: #4a5568;
+    }
+
+    .btn-success {
+      background: #38a169;
+    }
+
+    .btn-success:hover {
+      background: #2f855a;
+    }
+
+    .btn-container {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+
+    .conditional-section {
+      background: #f5f9ff;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+      border: 1px solid #bbdefb;
+      animation: slideDown 0.4s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .participant-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .participant-table th {
+      background: #0d47a1;
+      color: white;
+      padding: 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .participant-table td {
+      padding: 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .participant-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .participant-table tr:hover {
+      background: #e3f2fd;
+    }
+
+    .add-btn {
+      background: #38a169;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .add-btn:hover {
+      background: #2f855a;
+      transform: translateY(-2px);
+    }
+
+    .remove-btn {
+      background: #e53e3e;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .remove-btn:hover {
+      background: #c53030;
+    }
+
+    .letter-preview {
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 40px;
+      min-height: 600px;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 16px;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+      position: relative;
+    }
+
+    .letter-preview::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #0d47a1, #1e88e5);
+      border-radius: 4px 4px 0 0;
+    }
+
+    .highlight {
+      padding: 0 2px;
+      font-weight: bold;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .preview-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 16px;
+    }
+
+    .preview-table th {
+      background: #e3f2fd;
+      padding: 8px 12px;
+      text-align: left;
+      border: 1px solid #bbdefb;
+    }
+
+    .preview-table td {
+      padding: 8px 12px;
+      border: 1px solid #bbdefb;
+    }
+
+    .form-note {
+      background: #fff8e1;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid #ffc107;
+      margin-top: 20px;
+      font-size: 0.95rem;
+    }
+
+    .form-note i {
+      color: #ff9800;
+      margin-right: 8px;
+    }
+
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+      margin-right: 10px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 34px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked+.toggle-slider {
+      background-color: #1e88e5;
+    }
+
+    input:checked+.toggle-slider:before {
+      transform: translateX(26px);
+    }
+
+    .address-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+
+    @media (min-width: 768px) {
+      .address-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .air-ticket-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .air-ticket-table th {
+      background: #0d47a1;
+      color: white;
+      padding: 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .air-ticket-table td {
+      padding: 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .air-ticket-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .air-ticket-table tr:hover {
+      background: #e3f2fd;
+    }
+
+    .air-ticket-table input,
+    .air-ticket-table select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #cbd5e0;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      background: #f7fafc;
+    }
+
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .btn-container {
+        flex-direction: column;
+      }
+
+      .letter-preview {
+        padding: 20px;
+        font-size: 14px;
+      }
+
+      .tabs {
+        flex-direction: column;
+      }
+    }
+
+    .status-bar {
+      background: #e3f2fd;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .status-bar i {
+      color: #1e88e5;
+      font-size: 1.5rem;
+    }
+
+    .completion-indicator {
+      height: 10px;
+      background: #cbd5e0;
+      border-radius: 5px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .completion-progress {
+      height: 100%;
+      background: #38a169;
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    .uuid-display {
+      background: #e8f5e8;
+      padding: 10px 15px;
+      border-radius: 8px;
+      margin-top: 10px;
+      border-left: 4px solid #38a169;
+      font-family: monospace;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .uuid-display i {
+      color: #38a169;
+    }
+
+    .copy-btn {
+      background: #1e88e5;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .copy-btn:hover {
+      background: #0d47a1;
+    }
+
+    .mb-4 {
+      margin-bottom: 1rem;
+    }
+
+    .switch-radio-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .switch-radio-option {
+      display: flex;
+      align-items: center;
+    }
+
+    .switch-radio-option input[type="radio"] {
+      display: none;
+    }
+
+    .switch-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 15px 20px;
+      background: #f7fafc;
+      border: 2px solid #cbd5e0;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .switch-label:hover {
+      background: #edf2f7;
+      border-color: #a0aec0;
+    }
+
+    .switch-radio-option input[type="radio"]:checked+.switch-label {
+      background: #e3f2fd;
+      border-color: #1e88e5;
+      box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
+    }
+
+    .switch-text {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #2d3748;
+    }
+
+    .switch-slider {
+      width: 44px;
+      height: 24px;
+      background: #cbd5e0;
+      border-radius: 12px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .switch-slider:before {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+      transition: all 0.3s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .switch-radio-option input[type="radio"]:checked+.switch-label .switch-slider {
+      background: #1e88e5;
+    }
+
+    .switch-radio-option input[type="radio"]:checked+.switch-label .switch-slider:before {
+      left: 22px;
+    }
+
+    /* Hide the actual checkbox */
+    #visitedCountryBefore {
+      display: none;
+    }
+
+    /* Switch container */
+    .switch-label {
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+      gap: 10px;
+    }
+
+    /* Text */
+    .switch-text {
+      font-size: 14px;
+    }
+
+    /* Slider background */
+    .switch-slider {
+      width: 45px;
+      height: 22px;
+      background: #ccc;
+      border-radius: 30px;
+      position: relative;
+      transition: background 0.3s ease;
+    }
+
+    /* Slider circle */
+    .switch-slider::before {
+      content: "";
+      width: 18px;
+      height: 18px;
+      background: #fff;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.3s ease;
+    }
+
+    /* When checkbox is checked -> slider ON */
+    #visitedCountryBefore:checked+.switch-label .switch-slider {
+      background: #4caf50;
+      /* Green ON color */
+    }
+
+    /* Move the circle to the right when checked */
+    #visitedCountryBefore:checked+.switch-label .switch-slider::before {
+      transform: translateX(23px);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <div class="header-overlay"></div>
+      <h1><i class="fas fa-file-contract"></i> Thai Visa Cover Letter Generator</h1>
+      <p>Create professional visa application letters for Thailand in minutes. Fill in your details and generate a
+        customized cover letter.</p>
+    </header>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="openTab('form-tab')">
+        <i class="fas fa-edit"></i> Application Form
+      </button>
+      <button class="tab-btn" onclick="openTab('preview-tab')">
+        <i class="fas fa-file-alt"></i> Cover Letter Preview
+      </button>
+      <button class="tab-btn" onclick="openTab('air-ticket-tab')">
+        <i class="fas fa-plane"></i> Air Ticket Info
+      </button>
+    </div>
+
+    <!-- Form Tab -->
+    <div id="form-tab" class="tab-content active">
+      <form id="visaForm">
+        <div class="status-bar">
+          <i class="fas fa-info-circle"></i>
+          <div>
+            <p><strong>Complete all sections</strong> to generate your cover letter</p>
+            <div class="completion-indicator">
+              <div class="completion-progress" id="completionProgress"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- UUID Display -->
+        <div id="uuidContainer" class="uuid-display mb-4" style="display: none">
+          <div>
+            <i class="fas fa-fingerprint"></i>
+            <strong>Application ID:</strong>
+            <span id="generatedUUID"></span>
+          </div>
+          <button type="button" class="copy-btn" onclick="copyUUID()">
+            <i class="far fa-copy"></i> Copy
+          </button>
+        </div>
+
+        <!-- Applicant Information Section -->
+        <div class="form-section">
+          <h2 class="section-title"><i class="fas fa-user"></i> Applicant Information</h2>
+          <div class="form-grid">
+            <div class="input-group">
+              <label for="country" class="required">Country</label>
+              <select id="country" required onchange="updateCountry(); updateCompletion()">
+                <option value="">Select Country</option>
+                <option value="Malaysia">Malaysia</option>
+                <option value="Thailand" selected>Thailand</option>
+                <option value="Singapore">Singapore</option>
+                <option value="Vietnam">Vietnam</option>
+                <option value="Indonesia">Indonesia</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="fullName" class="required">Full Name</label>
+              <input type="text" id="fullName" required placeholder="John Doe"
+                oninput="updateCompletion(); saveToLocalStorage()">
+            </div>
+            <div class="input-group">
+              <label for="nationality" class="required">Nationality</label>
+              <input type="text" id="nationality" required placeholder="Bangladeshi" value="Bangladeshi"
+                oninput="updateCompletion(); saveToLocalStorage()">
+            </div>
+            <div class="input-group">
+              <label for="passportNo" class="required">Passport Number</label>
+              <input type="text" id="passportNo" required placeholder="AB1234567"
+                oninput="updateCompletion(); saveToLocalStorage()">
+            </div>
+            <div class="input-group">
+              <label for="mobile" class="required">Mobile Number</label>
+              <input type="tel" id="mobile" required placeholder="+880XXXXXXXXXX"
+                oninput="updateCompletion(); saveToLocalStorage()">
+            </div>
+            <div class="input-group">
+              <label for="email" class="required">Email Address</label>
+              <input type="email" id="email" required placeholder="john.doe@example.com"
+                oninput="updateCompletion(); saveToLocalStorage()">
+            </div>
+          </div>
+        </div>
+
+        <!-- Permanent Address Section -->
+        <div class="form-section">
+          <h2 class="section-title"><i class="fas fa-home"></i> Permanent Address</h2>
+          <div class="address-grid">
+            <div class="input-group">
+              <label for="permanentAddress1" class="required">Address Line 1</label>
+              <input type="text" id="permanentAddress1" required placeholder="House No, Road No, Area"
+                value="123 Main Road" oninput="updateCompletion(); saveToLocalStorage()">
+            </div>
+            <div class="input-group">
+              <label for="permanentAddress2">Address Line 2</label>
+              <input type="text" id="permanentAddress2" placeholder="Apartment, Suite, Unit (Optional)" value="Uttara"
+                oninput="saveToLocalStorage()">
+            </div>
+            <div class="input-group">
+              <label for="permanentCity" class="required">City</label>
+              <input type="text" id="permanentCity" required placeholder="Dhaka" value="Dhaka"
+                oninput="updateCompletion(); saveToLocalStorage()">
+            </div>
+            <div class="input-group">
+              <label for="permanentState" class="required">State</label>
+              <input type="text" id="permanentState" required placeholder="Dhaka Division" value="Dhaka Division"
+                oninput="updateCompletion(); saveToLocalStorage()">
+            </div>
+            <div class="input-group">
+              <label for="permanentZip" class="required">Zip Code</label>
+              <input type="text" id="permanentZip" required placeholder="1212" value="1212"
+                oninput="updateCompletion(); saveToLocalStorage()">
+            </div>
+          </div>
+        </div>
+
+        <!-- Present Address Section -->
+        <div class="form-section">
+          <h2 class="section-title"><i class="fas fa-map-marker-alt"></i> Present Address</h2>
+          <div class="toggle-container">
+            <label class="toggle-switch">
+              <input type="checkbox" id="hasPresentAddress" onchange="togglePresentAddress()">
+              <span class="toggle-slider"></span>
+            </label>
+            <label for="hasPresentAddress">Has different present address</label>
+          </div>
+
+          <div id="presentAddressFields" class="conditional-section" style="display: none">
+            <div class="address-grid">
+              <div class="input-group">
+                <label for="presentAddress1" class="required">Address Line 1</label>
+                <input type="text" id="presentAddress1" placeholder="House No, Road No, Area"
+                  oninput="updateCompletion(); saveToLocalStorage()">
+              </div>
+              <div class="input-group">
+                <label for="presentAddress2">Address Line 2</label>
+                <input type="text" id="presentAddress2" placeholder="Apartment, Suite, Unit (Optional)"
+                  oninput="saveToLocalStorage()">
+              </div>
+              <div class="input-group">
+                <label for="presentCity" class="required">City</label>
+                <input type="text" id="presentCity" placeholder="Dhaka"
+                  oninput="updateCompletion(); saveToLocalStorage()">
+              </div>
+              <div class="input-group">
+                <label for="presentState" class="required">State</label>
+                <input type="text" id="presentState" placeholder="Dhaka Division"
+                  oninput="updateCompletion(); saveToLocalStorage()">
+              </div>
+              <div class="input-group">
+                <label for="presentZip" class="required">Zip Code</label>
+                <input type="text" id="presentZip" placeholder="1205"
+                  oninput="updateCompletion(); saveToLocalStorage()">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visa Details Section -->
+        <div class="form-section">
+          <h2 class="section-title"><i class="fas fa-passport"></i> Visa Details</h2>
+          <div class="form-grid">
+            <div class="input-group">
+              <label for="visaType" class="required">Visa Type</label>
+              <select id="visaType" required onchange="updateCompletion(); saveToLocalStorage()">
+                <option value="">Select Visa Type</option>
+                <option value="Tourist Visa" selected>Tourist Visa</option>
+                <option value="Business Visa">Business Visa</option>
+                <option value="Medical Visa">Medical Visa</option>
+                <option value="Student Visa">Student Visa</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="travelStart" class="required">Travel Start Date</label>
+              <input type="date" id="travelStart" required onchange="updateCompletion(); saveToLocalStorage()">
+            </div>
+            <div class="input-group">
+              <label for="travelEnd" class="required">Travel End Date</label>
+              <input type="date" id="travelEnd" required onchange="updateCompletion(); saveToLocalStorage()">
+            </div>
+            <div class="input-group">
+              <label for="departureCity" class="required">Departure City</label>
+              <input type="text" id="departureCity" required placeholder="Dhaka" value="Dhaka"
+                oninput="updateCompletion(); saveToLocalStorage()">
+            </div>
+            <div class="input-group">
+              <label for="destinationCity" class="required">Destination City</label>
+              <input type="text" id="destinationCity" required placeholder="Bangkok" value="Bangkok"
+                oninput="updateCompletion(); saveToLocalStorage()">
+            </div>
+          </div>
+        </div>
+
+        <!-- Profession Section -->
+        <div class="form-section">
+          <h2 class="section-title"><i class="fas fa-briefcase"></i> Profession Information</h2>
+          <div class="form-grid">
+            <div class="input-group">
+              <label for="profession" class="required">Profession</label>
+              <select id="profession" required
+                onchange="toggleProfessionFields(); updateCompletion(); saveToLocalStorage()">
+                <option value="">Select Profession</option>
+                <option value="Employee" selected>Employee</option>
+                <option value="Business">Business Owner</option>
+                <option value="Doctor">Doctor</option>
+                <option value="Lawyer">Lawyer</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Profession-specific fields -->
+          <div id="employeeFields" class="conditional-section">
+            <h3><i class="fas fa-building"></i> Employee Details</h3>
+            <div class="form-grid">
+              <div class="input-group">
+                <label for="jobTitle" class="required">Job Title</label>
+                <input type="text" id="jobTitle" placeholder="Software Engineer" value="Senior Software Engineer"
+                  oninput="updateCompletion(); saveToLocalStorage()">
+              </div>
+              <div class="input-group">
+                <label for="employerName" class="required">Employer Name</label>
+                <input type="text" id="employerName" placeholder="Tech Solutions Ltd." value="Global Tech Solutions"
+                  oninput="updateCompletion(); saveToLocalStorage()">
+              </div>
+              <div class="input-group">
+                <label for="employmentStart" class="required">Employment Start Date</label>
+                <input type="date" id="employmentStart" onchange="updateCompletion(); saveToLocalStorage()">
+              </div>
+              <div class="input-group">
+                <label for="officeLocation" class="required">Location of Office</label>
+                <input type="text" id="officeLocation" placeholder="Uttara, Dhaka, Bangladesh"
+                  oninput="updateCompletion(); saveToLocalStorage()">
+              </div>
+            </div>
+          </div>
+
+          <div id="businessFields" class="conditional-section" style="display: none">
+            <h3><i class="fas fa-briefcase"></i> Business Details</h3>
+            <div class="form-grid">
+              <div class="input-group">
+                <label for="businessRole" class="required">Business Role</label>
+                <input type="text" id="businessRole" placeholder="CEO"
+                  oninput="updateCompletion(); saveToLocalStorage()">
+              </div>
+              <div class="input-group">
+                <label for="businessName" class="required">Business Name</label>
+                <input type="text" id="businessName" placeholder="Global Enterprises"
+                  oninput="updateCompletion(); saveToLocalStorage()">
+              </div>
+              <div class="input-group">
+                <label for="businessStartYear" class="required">Business Start Year</label>
+                <input type="number" id="businessStartYear" placeholder="2010"
+                  oninput="updateCompletion(); saveToLocalStorage()">
+              </div>
+              <div class="input-group">
+                <label for="businessNature" class="required">Nature of Business</label>
+                <input type="text" id="businessNature" placeholder="Information Technology"
+                  oninput="updateCompletion(); saveToLocalStorage()">
+              </div>
+              <div class="input-group">
+                <label for="businessLocation" class="required">Location of Business</label>
+                <input type="text" id="businessLocation" placeholder="Uttara, Dhaka, Bangladesh"
+                  oninput="updateCompletion(); saveToLocalStorage()">
+              </div>
+            </div>
+          </div>
+
+          <div id="doctorFields" class="conditional-section" style="display: none">
+            <h3><i class="fas fa-user-md"></i> Medical Professional Details</h3>
+            <div class="form-grid">
+              <div class="input-group">
+                <label for="doctorRegNo" class="required">BMDC Registration Number</label>
+                <input type="text" id="doctorRegNo" placeholder="BMDC-12345"
+                  oninput="updateCompletion(); saveToLocalStorage()">
+              </div>
+              <div class="input-group">
+                <label for="doctorPosition" class="required">Position</label>
+                <input type="text" id="doctorPosition" placeholder="Senior Surgeon"
+                  oninput="updateCompletion(); saveToLocalStorage()">
+              </div>
+              <div class="input-group">
+                <label for="hospitalName" class="required">Hospital Name</label>
+                <input type="text" id="hospitalName" placeholder="City General Hospital"
+                  oninput="updateCompletion(); saveToLocalStorage()">
+              </div>
+              <div class="input-group">
+                <label for="leaveStart" class="required">Leave Start Date</label>
+                <input type="date" id="leaveStart" onchange="updateCompletion(); saveToLocalStorage()">
+              </div>
+              <div class="input-group">
+                <label for="leaveEnd" class="required">Leave End Date</label>
+                <input type="date" id="leaveEnd" onchange="updateCompletion(); saveToLocalStorage()">
+              </div>
+            </div>
+          </div>
+
+          <div id="lawyerFields" class="conditional-section" style="display: none">
+            <h3><i class="fas fa-gavel"></i> Legal Professional Details</h3>
+            <div class="form-grid">
+              <div class="input-group">
+                <label for="lawyerEnrollNo" class="required">Bar Council Enrollment No.</label>
+                <input type="text" id="lawyerEnrollNo" placeholder="ENR-67890"
+                  oninput="updateCompletion(); saveToLocalStorage()">
+              </div>
+              <div class="input-group">
+                <label for="lawFirmName" class="required">Law Firm Name</label>
+                <input type="text" id="lawFirmName" placeholder="Justice Legal Associates"
+                  oninput="updateCompletion(); saveToLocalStorage()">
+              </div>
+            </div>
+          </div>
+
+          <div id="otherProfessionFields" class="conditional-section" style="display: none">
+            <h3><i class="fas fa-user-tie"></i> Other Profession Details</h3>
+            <div class="form-grid">
+              <div class="input-group">
+                <label for="professionOther" class="required">Profession</label>
+                <input type="text" id="professionOther" placeholder="Freelance Designer"
+                  oninput="updateCompletion(); saveToLocalStorage()">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Travel Companions Section -->
+        <div class="form-section">
+          <h2 class="section-title"><i class="fas fa-users"></i> Travel Companions</h2>
+          <div id="participantsContainer">
+            <table class="participant-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Relationship</th>
+                  <th>Passport No.</th>
+                  <th>Date of Birth</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="participantsTableBody">
+                <!-- Participants will be added here -->
+              </tbody>
+            </table>
+            <button type="button" class="add-btn" onclick="addParticipant()">
+              <i class="fas fa-plus"></i> Add Family Member
+            </button>
+          </div>
+        </div>
+
+        <!-- Travel History Section -->
+        <div class="form-section">
+          <h2 class="section-title"><i class="fas fa-globe-asia"></i> Travel History</h2>
+          <div class="form-grid">
+            <div class="input-group">
+              <label for="travelHistoryList" class="required">International Travel History *</label>
+              <textarea id="travelHistoryList" required placeholder="USA, UK, Canada, Japan, etc."
+                oninput="updateCompletion(); saveToLocalStorage()">USA, UK, Canada, Japan, etc.</textarea>
+            </div>
+          </div>
+
+          <!-- Visited Selected Country Before - Toggle -->
+          <div class="input-group">
+            <div class="switch-radio-container">
+              <div class="switch-radio-option">
+                <input type="checkbox" id="visitedCountryBefore" onchange="toggleCountryVisitFields()"
+                  oninput="saveToLocalStorage()" hidden>
+                <label for="visitedCountryBefore" class="switch-label">
+                  <span class="switch-text" id="visitedCountryText">Visited Thailand before</span>
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Country Visit Details - Conditional -->
+          <div id="countryVisitFields" class="conditional-section" style="display: none; margin-top: 15px;">
+            <div class="form-grid">
+              <div class="input-group">
+                <label for="lastCountryVisit" class="required">Last Visit Date to <span
+                    id="countryNameLabel">Thailand</span></label>
+                <input type="date" id="lastCountryVisit" placeholder="mm/dd/yyyy"
+                  onchange="updateCompletion(); saveToLocalStorage()">
+              </div>
+              <div class="input-group">
+                <label for="previousVisaNo" class="required">Previous Visa Number</label>
+                <input type="text" id="previousVisaNo" placeholder="TH-V123456" value="TH-V123456"
+                  oninput="updateCompletion(); saveToLocalStorage()">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Accommodation Details Section -->
+        <div class="form-section">
+          <h2 class="section-title"><i class="fas fa-hotel"></i> Accommodation Details</h2>
+          <div class="form-grid">
+            <div class="input-group">
+              <label for="hotelName" class="required">Hotel Name</label>
+              <input type="text" id="hotelName" required placeholder="Royal Benja Hotel" value="Royal Benja Hotel"
+                oninput="updateCompletion(); saveToLocalStorage()">
+            </div>
+            <div class="input-group">
+              <label for="hotelAddress" class="required">Hotel Address</label>
+              <input type="text" id="hotelAddress" required
+                placeholder="39 Sukhumvit Road (Soi 5), Bangkok 10110, Thailand"
+                value="39 Sukhumvit Road (Soi 5), Bangkok 10110, Thailand"
+                oninput="updateCompletion(); saveToLocalStorage()">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-note">
+          <i class="fas fa-info-circle"></i>
+          Please fill all required fields marked with asterisk (*). After completing the form, click "Generate Cover
+          Letter" to create your personalized visa application letter.
+        </div>
+
+        <div class="btn-container">
+          <button type="button" class="btn btn-success" onclick="generateCoverLetter()">
+            <i class="fas fa-file-alt"></i> Generate Cover Letter
+          </button>
+          <button type="reset" class="btn btn-secondary" onclick="resetForm()">
+            <i class="fas fa-redo"></i> Reset Form
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Air Ticket Tab -->
+    <div id="air-ticket-tab" class="tab-content">
+      <div class="form-section">
+        <h2 class="section-title"><i class="fas fa-plane"></i> Air Ticket Information</h2>
+
+        <!-- Flight Details -->
+        <div class="form-grid">
+          <div class="input-group">
+            <label for="airlinePNR" class="required">Airline PNR</label>
+            <input type="text" id="airlinePNR" required placeholder="53N2L7 (TG - THAI)" oninput="saveToLocalStorage()">
+          </div>
+          <div class="input-group">
+            <label for="galileoPNR" class="required">Galileo PNR</label>
+            <input type="text" id="galileoPNR" required placeholder="CF59P0" oninput="saveToLocalStorage()">
+          </div>
+          <div class="input-group">
+            <label for="dateOfIssue" class="required">Date of Issue</label>
+            <input type="date" id="dateOfIssue" required onchange="saveToLocalStorage()">
+          </div>
+        </div>
+
+        <!-- Passenger Table -->
+        <h3 style="margin: 20px 0 10px 0; color: #0d47a1;">Passenger Information</h3>
+        <table class="air-ticket-table">
+          <thead>
+            <tr>
+              <th>Passenger Information</th>
+              <th>Passport Number</th>
+              <th>Frequent Flyer Number</th>
+              <th>Ticket</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="airTicketTableBody">
+            <!-- Passengers will be added here -->
+          </tbody>
+        </table>
+        <button type="button" class="add-btn" onclick="addAirTicketPassenger()">
+          <i class="fas fa-plus"></i> Add Passenger
+        </button>
+
+        <!-- Flight Itinerary -->
+        <h3 style="margin: 30px 0 10px 0; color: #0d47a1;">Flight Itinerary</h3>
+        <table class="air-ticket-table">
+          <thead>
+            <tr>
+              <th>Airline</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Depart</th>
+              <th>Arrive</th>
+              <th>Class</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="flightItineraryTableBody">
+            <!-- Flight details will be added here -->
+          </tbody>
+        </table>
+        <button type="button" class="add-btn" onclick="addFlightItinerary()">
+          <i class="fas fa-plus"></i> Add Flight
+        </button>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-secondary" onclick="openTab('form-tab')">
+          <i class="fas fa-arrow-left"></i> Back to Form
+        </button>
+        <button class="btn" onclick="openTab('preview-tab')">
+          <i class="fas fa-file-alt"></i> Preview Letter
+        </button>
+      </div>
+    </div>
+
+    <!-- Preview Tab -->
+    <div id="preview-tab" class="tab-content">
+      <div class="letter-preview" id="letterPreview">
+        <p>Your generated cover letter will appear here after you fill out the form and click "Generate Cover Letter".
+        </p>
+      </div>
+
+      <div class="actions">
+        <button class="btn" onclick="printLetter()">
+          <i class="fas fa-print"></i> Print Letter
+        </button>
+        <button class="btn btn-secondary" onclick="openTab('form-tab')">
+          <i class="fas fa-edit"></i> Edit Form
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Global variables
+    let applicationUUID = '';
+    let originalAirlinePNR = '';
+    let originalGalileoPNR = '';
+    let participantCount = 0;
+    let airTicketPassengerCount = 0;
+    let flightItineraryCount = 0;
+
+    // Country code mapping
+    const countryCodes = {
+      'Thailand': 'THA',
+      'Malaysia': 'MYS',
+      'Singapore': 'SGP',
+      'Vietnam': 'VNM',
+      'Indonesia': 'IDN'
+    };
+
+    // Tab navigation
+    function openTab(tabName) {
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+
+      // Show the selected tab
+      document.getElementById(tabName).classList.add('active');
+
+      // Update tab buttons
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      // Activate the clicked tab button
+      event.currentTarget.classList.add('active');
+    }
+
+    // Generate UUID when country is selected (only once)
+    function generateUUID() {
+      const country = document.getElementById('country').value;
+      if (!country) return;
+
+      // Generate airline PNR (format: 2 digits, 1 letter, 1 digit, 1 letter, 1 digit)
+      if (!originalAirlinePNR) {
+        originalAirlinePNR = generateAirlinePNR();
+      }
+
+      // Generate Galileo PNR (format: 2 letters, 2 digits, 1 letter, 1 digit)
+      if (!originalGalileoPNR) {
+        originalGalileoPNR = generateGalileoPNR();
+      }
+
+      // Get country code
+      const countryCode = countryCodes[country] || country.substring(0, 3).toUpperCase();
+
+      // Create UUID in format: TRH-{COUNTRY_CODE}-PNR-{AIRLINE_PNR}-{GALILEO_PNR}
+      applicationUUID = `TRH-${countryCode}-PNR-${originalAirlinePNR}-${originalGalileoPNR}`;
+
+      // Display UUID
+      document.getElementById('generatedUUID').textContent = applicationUUID;
+      document.getElementById('uuidContainer').style.display = 'flex';
+
+      // Set the PNR values in the air ticket tab (only once)
+      if (!document.getElementById('airlinePNR').value) {
+        document.getElementById('airlinePNR').value = `${originalAirlinePNR} (TG - THAI)`;
+        document.getElementById('galileoPNR').value = originalGalileoPNR;
+      }
+
+      // Set current date for date of issue (only if not already set)
+      if (!document.getElementById('dateOfIssue').value) {
+        const today = new Date();
+        document.getElementById('dateOfIssue').valueAsDate = today;
+      }
+
+      // Save to local storage
+      saveToLocalStorage();
+    }
+
+    // When country changes, only update country code in UUID
+    function updateCountry() {
+      const country = document.getElementById('country').value;
+      if (!country || !originalAirlinePNR || !originalGalileoPNR) return;
+
+      // Get country code
+      const countryCode = countryCodes[country] || country.substring(0, 3).toUpperCase();
+
+      // Update only the country code in UUID
+      if (applicationUUID) {
+        const uuidParts = applicationUUID.split('-');
+        if (uuidParts.length >= 2) {
+          uuidParts[1] = countryCode; // Update country code (second part)
+          applicationUUID = uuidParts.join('-');
+        } else {
+          // If UUID format is wrong, regenerate full UUID
+          applicationUUID = `TRH-${countryCode}-PNR-${originalAirlinePNR}-${originalGalileoPNR}`;
+        }
+      } else {
+        // If no UUID exists yet, create new one
+        applicationUUID = `TRH-${countryCode}-PNR-${originalAirlinePNR}-${originalGalileoPNR}`;
+      }
+
+      // Display updated UUID
+      document.getElementById('generatedUUID').textContent = applicationUUID;
+      document.getElementById('uuidContainer').style.display = 'flex';
+
+      // Update country name labels
+      updateCountryNameLabels();
+
+      updateCompletion();
+      saveToLocalStorage();
+    }
+
+    // Generate Airline PNR: 2 digits, 1 letter, 1 digit, 1 letter, 1 digit
+    function generateAirlinePNR() {
+      const digits = '0123456789';
+      const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+      let pnr = '';
+
+      // First 2 digits
+      for (let i = 0; i < 2; i++) {
+        pnr += digits.charAt(Math.floor(Math.random() * digits.length));
+      }
+
+      // 3rd character: letter
+      pnr += letters.charAt(Math.floor(Math.random() * letters.length));
+
+      // 4th character: digit
+      pnr += digits.charAt(Math.floor(Math.random() * digits.length));
+
+      // 5th character: letter
+      pnr += letters.charAt(Math.floor(Math.random() * letters.length));
+
+      // 6th character: digit
+      pnr += digits.charAt(Math.floor(Math.random() * digits.length));
+
+      return pnr;
+    }
+
+    // Generate Galileo PNR: 2 letters, 2 digits, 1 letter, 1 digit
+    function generateGalileoPNR() {
+      const digits = '0123456789';
+      const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+      let pnr = '';
+
+      // First 2 letters
+      for (let i = 0; i < 2; i++) {
+        pnr += letters.charAt(Math.floor(Math.random() * letters.length));
+      }
+
+      // Next 2 digits
+      for (let i = 0; i < 2; i++) {
+        pnr += digits.charAt(Math.floor(Math.random() * digits.length));
+      }
+
+      // 5th character: letter
+      pnr += letters.charAt(Math.floor(Math.random() * letters.length));
+
+      // 6th character: digit
+      pnr += digits.charAt(Math.floor(Math.random() * digits.length));
+
+      return pnr;
+    }
+
+    // Copy UUID to clipboard
+    function copyUUID() {
+      navigator.clipboard.writeText(applicationUUID).then(() => {
+        alert('Application ID copied to clipboard!');
+      });
+    }
+
+    // Toggle country visit fields
+    function toggleCountryVisitFields() {
+      const isChecked = document.getElementById('visitedCountryBefore').checked;
+      const countryVisitFields = document.getElementById('countryVisitFields');
+
+      if (isChecked) {
+        countryVisitFields.style.display = 'block';
+
+        // Make fields required when shown
+        document.getElementById('lastCountryVisit').setAttribute('required', 'required');
+        document.getElementById('previousVisaNo').setAttribute('required', 'required');
+      } else {
+        countryVisitFields.style.display = 'none';
+
+        // Remove required when hidden
+        document.getElementById('lastCountryVisit').removeAttribute('required');
+        document.getElementById('previousVisaNo').removeAttribute('required');
+      }
+
+      updateCompletion();
+      saveToLocalStorage();
+    }
+
+    // Update country name in labels when country changes
+    function updateCountryNameLabels() {
+      const country = document.getElementById('country').value;
+      const countryName = country || 'Thailand';
+
+      // Update switch text
+      document.getElementById('visitedCountryText').textContent = `Visited ${countryName} before`;
+
+      // Update label in form
+      document.getElementById('countryNameLabel').textContent = countryName;
+    }
+
+    // Save form data to local storage
+    function saveToLocalStorage() {
+      if (!applicationUUID) return;
+
+      const formData = {
+        uuid: applicationUUID,
+        country: document.getElementById('country').value,
+        fullName: document.getElementById('fullName').value,
+        nationality: document.getElementById('nationality').value,
+        passportNo: document.getElementById('passportNo').value,
+        mobile: document.getElementById('mobile').value,
+        email: document.getElementById('email').value,
+        permanentAddress1: document.getElementById('permanentAddress1').value,
+        permanentAddress2: document.getElementById('permanentAddress2').value,
+        permanentCity: document.getElementById('permanentCity').value,
+        permanentState: document.getElementById('permanentState').value,
+        permanentZip: document.getElementById('permanentZip').value,
+        hasPresentAddress: document.getElementById('hasPresentAddress').checked,
+        presentAddress1: document.getElementById('presentAddress1').value,
+        presentAddress2: document.getElementById('presentAddress2').value,
+        presentCity: document.getElementById('presentCity').value,
+        presentState: document.getElementById('presentState').value,
+        presentZip: document.getElementById('presentZip').value,
+        visaType: document.getElementById('visaType').value,
+        travelStart: document.getElementById('travelStart').value,
+        travelEnd: document.getElementById('travelEnd').value,
+        departureCity: document.getElementById('departureCity').value,
+        destinationCity: document.getElementById('destinationCity').value,
+        profession: document.getElementById('profession').value,
+        jobTitle: document.getElementById('jobTitle').value,
+        employerName: document.getElementById('employerName').value,
+        employmentStart: document.getElementById('employmentStart').value,
+        officeLocation: document.getElementById('officeLocation').value,
+        businessRole: document.getElementById('businessRole').value,
+        businessName: document.getElementById('businessName').value,
+        businessStartYear: document.getElementById('businessStartYear').value,
+        businessNature: document.getElementById('businessNature').value,
+        businessLocation: document.getElementById('businessLocation').value,
+        doctorRegNo: document.getElementById('doctorRegNo').value,
+        doctorPosition: document.getElementById('doctorPosition').value,
+        hospitalName: document.getElementById('hospitalName').value,
+        leaveStart: document.getElementById('leaveStart').value,
+        leaveEnd: document.getElementById('leaveEnd').value,
+        lawyerEnrollNo: document.getElementById('lawyerEnrollNo').value,
+        lawFirmName: document.getElementById('lawFirmName').value,
+        professionOther: document.getElementById('professionOther').value,
+        hotelName: document.getElementById('hotelName').value,
+        hotelAddress: document.getElementById('hotelAddress').value,
+        travelHistoryList: document.getElementById('travelHistoryList').value,
+        visitedCountryBefore: document.getElementById('visitedCountryBefore').checked,
+        lastCountryVisit: document.getElementById('lastCountryVisit').value,
+        previousVisaNo: document.getElementById('previousVisaNo').value,
+        airlinePNR: document.getElementById('airlinePNR').value,
+        galileoPNR: document.getElementById('galileoPNR').value,
+        dateOfIssue: document.getElementById('dateOfIssue').value,
+        participants: [],
+        airTicketPassengers: [],
+        flightItineraries: []
+      };
+
+      // Collect participants data
+      document.querySelectorAll('#participantsTableBody tr').forEach(row => {
+        const participant = {
+          name: row.querySelector('.participant-name').value,
+          relationship: row.querySelector('.participant-relationship').value,
+          passportNo: row.querySelector('.participant-passport').value,
+          dob: row.querySelector('.participant-dob').value
+        };
+        formData.participants.push(participant);
+      });
+
+      // Collect air ticket passengers data
+      document.querySelectorAll('#airTicketTableBody tr').forEach(row => {
+        const passenger = {
+          name: row.querySelector('.air-ticket-name').value,
+          passport: row.querySelector('.air-ticket-passport').value,
+          frequentFlyer: row.querySelector('.air-ticket-ffn').value,
+          ticket: row.querySelector('.air-ticket-number').value
+        };
+        formData.airTicketPassengers.push(passenger);
+      });
+
+      // Collect flight itineraries data
+      document.querySelectorAll('#flightItineraryTableBody tr').forEach(row => {
+        const flight = {
+          airline: row.querySelector('.flight-airline').value,
+          from: row.querySelector('.flight-from').value,
+          to: row.querySelector('.flight-to').value,
+          depart: row.querySelector('.flight-depart').value,
+          arrive: row.querySelector('.flight-arrive').value,
+          class: row.querySelector('.flight-class').value,
+          status: row.querySelector('.flight-status').value
+        };
+        formData.flightItineraries.push(flight);
+      });
+
+      // Save to local storage
+      localStorage.setItem(`visaForm_${applicationUUID}`, JSON.stringify(formData));
+      console.log('Data saved to local storage with UUID:', applicationUUID);
+    }
+
+    // Load form data from local storage
+    function loadFromLocalStorage() {
+      if (!applicationUUID) return;
+
+      const savedData = localStorage.getItem(`visaForm_${applicationUUID}`);
+      if (!savedData) return;
+
+      const formData = JSON.parse(savedData);
+
+      // Save original PNRs from saved data
+      if (formData.airlinePNR) {
+        const pnrMatch = formData.airlinePNR.match(/(\w{6})/);
+        if (pnrMatch) {
+          originalAirlinePNR = pnrMatch[1];
+        }
+      }
+
+      if (formData.galileoPNR) {
+        originalGalileoPNR = formData.galileoPNR;
+      }
+
+      // Load basic form data
+      document.getElementById('country').value = formData.country || '';
+      document.getElementById('fullName').value = formData.fullName || '';
+      document.getElementById('nationality').value = formData.nationality || '';
+      document.getElementById('passportNo').value = formData.passportNo || '';
+      document.getElementById('mobile').value = formData.mobile || '';
+      document.getElementById('email').value = formData.email || '';
+      document.getElementById('permanentAddress1').value = formData.permanentAddress1 || '';
+      document.getElementById('permanentAddress2').value = formData.permanentAddress2 || '';
+      document.getElementById('permanentCity').value = formData.permanentCity || '';
+      document.getElementById('permanentState').value = formData.permanentState || '';
+      document.getElementById('permanentZip').value = formData.permanentZip || '';
+      document.getElementById('hasPresentAddress').checked = formData.hasPresentAddress || false;
+      document.getElementById('presentAddress1').value = formData.presentAddress1 || '';
+      document.getElementById('presentAddress2').value = formData.presentAddress2 || '';
+      document.getElementById('presentCity').value = formData.presentCity || '';
+      document.getElementById('presentState').value = formData.presentState || '';
+      document.getElementById('presentZip').value = formData.presentZip || '';
+      document.getElementById('visaType').value = formData.visaType || '';
+      document.getElementById('travelStart').value = formData.travelStart || '';
+      document.getElementById('travelEnd').value = formData.travelEnd || '';
+      document.getElementById('departureCity').value = formData.departureCity || '';
+      document.getElementById('destinationCity').value = formData.destinationCity || '';
+      document.getElementById('profession').value = formData.profession || '';
+      document.getElementById('jobTitle').value = formData.jobTitle || '';
+      document.getElementById('employerName').value = formData.employerName || '';
+      document.getElementById('employmentStart').value = formData.employmentStart || '';
+      document.getElementById('officeLocation').value = formData.officeLocation || '';
+      document.getElementById('businessRole').value = formData.businessRole || '';
+      document.getElementById('businessName').value = formData.businessName || '';
+      document.getElementById('businessStartYear').value = formData.businessStartYear || '';
+      document.getElementById('businessNature').value = formData.businessNature || '';
+      document.getElementById('businessLocation').value = formData.businessLocation || '';
+      document.getElementById('doctorRegNo').value = formData.doctorRegNo || '';
+      document.getElementById('doctorPosition').value = formData.doctorPosition || '';
+      document.getElementById('hospitalName').value = formData.hospitalName || '';
+      document.getElementById('leaveStart').value = formData.leaveStart || '';
+      document.getElementById('leaveEnd').value = formData.leaveEnd || '';
+      document.getElementById('lawyerEnrollNo').value = formData.lawyerEnrollNo || '';
+      document.getElementById('lawFirmName').value = formData.lawFirmName || '';
+      document.getElementById('professionOther').value = formData.professionOther || '';
+      document.getElementById('hotelName').value = formData.hotelName || '';
+      document.getElementById('hotelAddress').value = formData.hotelAddress || '';
+      document.getElementById('travelHistoryList').value = formData.travelHistoryList || '';
+      document.getElementById('visitedCountryBefore').checked = formData.visitedCountryBefore || false;
+      document.getElementById('lastCountryVisit').value = formData.lastCountryVisit || '';
+      document.getElementById('previousVisaNo').value = formData.previousVisaNo || '';
+      document.getElementById('airlinePNR').value = formData.airlinePNR || '';
+      document.getElementById('galileoPNR').value = formData.galileoPNR || '';
+      document.getElementById('dateOfIssue').value = formData.dateOfIssue || '';
+
+      // Load participants
+      if (formData.participants && formData.participants.length > 0) {
+        document.getElementById('participantsTableBody').innerHTML = '';
+        formData.participants.forEach(participant => {
+          addParticipant();
+          const rows = document.querySelectorAll('#participantsTableBody tr');
+          const lastRow = rows[rows.length - 1];
+          lastRow.querySelector('.participant-name').value = participant.name || '';
+          lastRow.querySelector('.participant-relationship').value = participant.relationship || '';
+          lastRow.querySelector('.participant-passport').value = participant.passportNo || '';
+          lastRow.querySelector('.participant-dob').value = participant.dob || '';
+        });
+      }
+
+      // Load air ticket passengers
+      if (formData.airTicketPassengers && formData.airTicketPassengers.length > 0) {
+        document.getElementById('airTicketTableBody').innerHTML = '';
+        formData.airTicketPassengers.forEach(passenger => {
+          addAirTicketPassenger();
+          const rows = document.querySelectorAll('#airTicketTableBody tr');
+          const lastRow = rows[rows.length - 1];
+          lastRow.querySelector('.air-ticket-name').value = passenger.name || '';
+          lastRow.querySelector('.air-ticket-passport').value = passenger.passport || '';
+          lastRow.querySelector('.air-ticket-ffn').value = passenger.frequentFlyer || '';
+          lastRow.querySelector('.air-ticket-number').value = passenger.ticket || '';
+        });
+      }
+
+      // Load flight itineraries
+      if (formData.flightItineraries && formData.flightItineraries.length > 0) {
+        document.getElementById('flightItineraryTableBody').innerHTML = '';
+        formData.flightItineraries.forEach(flight => {
+          addFlightItinerary();
+          const rows = document.querySelectorAll('#flightItineraryTableBody tr');
+          const lastRow = rows[rows.length - 1];
+          lastRow.querySelector('.flight-airline').value = flight.airline || '';
+          lastRow.querySelector('.flight-from').value = flight.from || '';
+          lastRow.querySelector('.flight-to').value = flight.to || '';
+          lastRow.querySelector('.flight-depart').value = flight.depart || '';
+          lastRow.querySelector('.flight-arrive').value = flight.arrive || '';
+          lastRow.querySelector('.flight-class').value = flight.class || '';
+          lastRow.querySelector('.flight-status').value = flight.status || '';
+        });
+      }
+
+      // Toggle fields based on loaded data
+      togglePresentAddress();
+      toggleProfessionFields();
+      toggleCountryVisitFields();
+      updateCountryNameLabels();
+      updateCompletion();
+    }
+
+    // Toggle present address fields
+    function togglePresentAddress() {
+      const hasPresentAddress = document.getElementById('hasPresentAddress').checked;
+      const presentAddressFields = document.getElementById('presentAddressFields');
+
+      if (hasPresentAddress) {
+        presentAddressFields.style.display = 'block';
+      } else {
+        presentAddressFields.style.display = 'none';
+      }
+      updateCompletion();
+    }
+
+    // Toggle profession fields based on selection
+    function toggleProfessionFields() {
+      const profession = document.getElementById('profession').value;
+
+      // Hide all profession fields
+      document.getElementById('employeeFields').style.display = 'none';
+      document.getElementById('businessFields').style.display = 'none';
+      document.getElementById('doctorFields').style.display = 'none';
+      document.getElementById('lawyerFields').style.display = 'none';
+      document.getElementById('otherProfessionFields').style.display = 'none';
+
+      // Show the relevant profession fields
+      if (profession === 'Employee') {
+        document.getElementById('employeeFields').style.display = 'block';
+      } else if (profession === 'Business') {
+        document.getElementById('businessFields').style.display = 'block';
+      } else if (profession === 'Doctor') {
+        document.getElementById('doctorFields').style.display = 'block';
+      } else if (profession === 'Lawyer') {
+        document.getElementById('lawyerFields').style.display = 'block';
+      } else if (profession === 'Other') {
+        document.getElementById('otherProfessionFields').style.display = 'block';
+      }
+    }
+
+    // Participants management
+    function addParticipant() {
+      participantCount++;
+      const tableBody = document.getElementById('participantsTableBody');
+      const row = document.createElement('tr');
+
+      row.innerHTML = `
+                <td><input type="text" placeholder="Full Name" class="participant-name" required oninput="saveToLocalStorage()"></td>
+                <td>
+                    <select class="participant-relationship" required onchange="saveToLocalStorage()">
+                        <option value="">Select</option>
+                        <option value="Spouse">Spouse</option>
+                        <option value="Child">Child</option>
+                        <option value="Parent">Parent</option>
+                        <option value="Sibling">Sibling</option>
+                    </select>
+                </td>
+                <td><input type="text" placeholder="Passport No." class="participant-passport" required oninput="saveToLocalStorage()"></td>
+                <td><input type="date" class="participant-dob" required onchange="saveToLocalStorage()"></td>
+                <td><button type="button" class="remove-btn" onclick="removeParticipant(this)"><i class="fas fa-trash"></i></button></td>
+            `;
+
+      tableBody.appendChild(row);
+      updateCompletion();
+    }
+
+    function removeParticipant(button) {
+      const row = button.closest('tr');
+      row.remove();
+      updateCompletion();
+      saveToLocalStorage();
+    }
+
+    // Air ticket passengers management
+    function addAirTicketPassenger() {
+      airTicketPassengerCount++;
+      const tableBody = document.getElementById('airTicketTableBody');
+      const row = document.createElement('tr');
+
+      row.innerHTML = `
+                <td><input type="text" placeholder="Passenger Name" class="air-ticket-name" required oninput="saveToLocalStorage()" value="${airTicketPassengerCount === 1 ? 'John Doe' : ''}"></td>
+                <td><input type="text" placeholder="Passport No." class="air-ticket-passport" required oninput="saveToLocalStorage()" value="${airTicketPassengerCount === 1 ? 'AB1234567' : ''}"></td>
+                <td><input type="text" placeholder="Frequent Flyer No." class="air-ticket-ffn" oninput="saveToLocalStorage()"></td>
+                <td><input type="text" placeholder="Ticket Number" class="air-ticket-number" oninput="saveToLocalStorage()"></td>
+                <td><button type="button" class="remove-btn" onclick="removeAirTicketPassenger(this)"><i class="fas fa-trash"></i></button></td>
+            `;
+
+      tableBody.appendChild(row);
+      updateCompletion();
+    }
+
+    function removeAirTicketPassenger(button) {
+      const row = button.closest('tr');
+      row.remove();
+      updateCompletion();
+      saveToLocalStorage();
+    }
+
+    // Flight itinerary management
+    function addFlightItinerary() {
+      flightItineraryCount++;
+      const tableBody = document.getElementById('flightItineraryTableBody');
+      const row = document.createElement('tr');
+
+      row.innerHTML = `
+                <td>
+                    <select class="flight-airline" required onchange="saveToLocalStorage()">
+                        <option value="">Select Airline</option>
+                        <option value="THAI" selected>THAI</option>
+                        <option value="Biman Bangladesh">Biman Bangladesh</option>
+                        <option value="Emirates">Emirates</option>
+                        <option value="Qatar Airways">Qatar Airways</option>
+                    </select>
+                </td>
+                <td><input type="text" placeholder="Departure City" class="flight-from" required oninput="saveToLocalStorage()" value="${flightItineraryCount === 1 ? 'Dhaka - Hazrat Shahjalal Intl Arpt, Terminal 2' : ''}"></td>
+                <td><input type="text" placeholder="Arrival City" class="flight-to" required oninput="saveToLocalStorage()" value="${flightItineraryCount === 1 ? 'Bangkok - Suvarnabhumi Intl Arpt' : ''}"></td>
+                <td><input type="datetime-local" class="flight-depart" required onchange="saveToLocalStorage()"></td>
+                <td><input type="datetime-local" class="flight-arrive" required onchange="saveToLocalStorage()"></td>
+                <td>
+                    <select class="flight-class" required onchange="saveToLocalStorage()">
+                        <option value="">Select Class</option>
+                        <option value="W-Economy" selected>W-Economy</option>
+                        <option value="Economy">Economy</option>
+                        <option value="Business">Business</option>
+                        <option value="First">First</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="flight-status" required onchange="saveToLocalStorage()">
+                        <option value="">Select Status</option>
+                        <option value="Confirmed" selected>Confirmed</option>
+                        <option value="Waitlisted">Waitlisted</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                </td>
+            `;
+
+      tableBody.appendChild(row);
+
+      // Set default dates for the first flight
+      if (flightItineraryCount === 1) {
+        setTimeout(() => {
+          const departInputs = document.querySelectorAll('.flight-depart');
+          const arriveInputs = document.querySelectorAll('.flight-arrive');
+
+          if (departInputs[0]) {
+            const departDate = new Date();
+            departDate.setDate(departDate.getDate() + 7);
+            departDate.setHours(2, 45, 0);
+            departInputs[0].value = departDate.toISOString().slice(0, 16);
+          }
+
+          if (arriveInputs[0]) {
+            const arriveDate = new Date();
+            arriveDate.setDate(arriveDate.getDate() + 7);
+            arriveDate.setHours(6, 15, 0);
+            arriveInputs[0].value = arriveDate.toISOString().slice(0, 16);
+          }
+        }, 100);
+      }
+
+      updateCompletion();
+    }
+
+    function removeFlightItinerary(button) {
+      const row = button.closest('tr');
+      row.remove();
+      updateCompletion();
+      saveToLocalStorage();
+    }
+
+    // Update completion indicator
+    function updateCompletion() {
+      const requiredFields = document.querySelectorAll('[required]');
+      let completed = 0;
+
+      requiredFields.forEach(field => {
+        if (field.value.trim() !== '') {
+          completed++;
+        }
+      });
+
+      // Check profession-specific fields
+      const profession = document.getElementById('profession').value;
+      let professionFields = [];
+
+      if (profession === 'Employee') {
+        professionFields = document.querySelectorAll('#employeeFields [required]');
+      } else if (profession === 'Business') {
+        professionFields = document.querySelectorAll('#businessFields [required]');
+      } else if (profession === 'Doctor') {
+        professionFields = document.querySelectorAll('#doctorFields [required]');
+      } else if (profession === 'Lawyer') {
+        professionFields = document.querySelectorAll('#lawyerFields [required]');
+      } else if (profession === 'Other') {
+        professionFields = document.querySelectorAll('#otherProfessionFields [required]');
+      }
+
+      professionFields.forEach(field => {
+        if (field.value.trim() !== '') {
+          completed++;
+        }
+      });
+
+      // Check travel history - country visit fields if toggle is on
+      const visitedCountryBefore = document.getElementById('visitedCountryBefore').checked;
+      if (visitedCountryBefore) {
+        const countryFields = document.querySelectorAll('#countryVisitFields [required]');
+        countryFields.forEach(field => {
+          if (field.value.trim() !== '') {
+            completed++;
+          }
+        });
+      }
+
+      // Check participants
+      const participants = document.querySelectorAll('.participant-name');
+      participants.forEach(participant => {
+        if (participant.value.trim() !== '') {
+          completed++;
+        }
+      });
+
+      const percentage = Math.min(100, Math.round((completed / requiredFields.length) * 100));
+      document.getElementById('completionProgress').style.width = percentage + '%';
+    }
+
+    // Reset form
+    function resetForm() {
+      if (confirm('Are you sure you want to reset the form? All data will be lost.')) {
+        document.getElementById('visaForm').reset();
+        document.getElementById('participantsTableBody').innerHTML = '';
+        document.getElementById('airTicketTableBody').innerHTML = '';
+        document.getElementById('flightItineraryTableBody').innerHTML = '';
+        document.getElementById('uuidContainer').style.display = 'none';
+        applicationUUID = '';
+        originalAirlinePNR = '';
+        originalGalileoPNR = '';
+        participantCount = 0;
+        airTicketPassengerCount = 0;
+        flightItineraryCount = 0;
+        toggleProfessionFields();
+        toggleCountryVisitFields();
+        updateCompletion();
+
+        // Clear local storage for this UUID
+        if (applicationUUID) {
+          localStorage.removeItem(`visaForm_${applicationUUID}`);
+        }
+      }
+    }
+
+    // Generate cover letter
+    function generateCoverLetter() {
+      // Collect form data
+      const formData = {
+        fullName: document.getElementById('fullName').value,
+        nationality: document.getElementById('nationality').value,
+        country: document.getElementById('country').value,
+        passportNo: document.getElementById('passportNo').value,
+        mobile: document.getElementById('mobile').value,
+        email: document.getElementById('email').value,
+        permanentAddress1: document.getElementById('permanentAddress1').value,
+        permanentAddress2: document.getElementById('permanentAddress2').value,
+        permanentCity: document.getElementById('permanentCity').value,
+        permanentState: document.getElementById('permanentState').value,
+        permanentZip: document.getElementById('permanentZip').value,
+        hasPresentAddress: document.getElementById('hasPresentAddress').checked,
+        presentAddress1: document.getElementById('presentAddress1').value,
+        presentAddress2: document.getElementById('presentAddress2').value,
+        presentCity: document.getElementById('presentCity').value,
+        presentState: document.getElementById('presentState').value,
+        presentZip: document.getElementById('presentZip').value,
+        visaType: document.getElementById('visaType').value,
+        travelStart: document.getElementById('travelStart').value,
+        travelEnd: document.getElementById('travelEnd').value,
+        departureCity: document.getElementById('departureCity').value,
+        destinationCity: document.getElementById('destinationCity').value,
+        profession: document.getElementById('profession').value,
+        jobTitle: document.getElementById('jobTitle').value,
+        employerName: document.getElementById('employerName').value,
+        employmentStart: document.getElementById('employmentStart').value,
+        officeLocation: document.getElementById('officeLocation').value,
+        businessRole: document.getElementById('businessRole').value,
+        businessName: document.getElementById('businessName').value,
+        businessStartYear: document.getElementById('businessStartYear').value,
+        businessNature: document.getElementById('businessNature').value,
+        businessLocation: document.getElementById('businessLocation').value,
+        doctorRegNo: document.getElementById('doctorRegNo').value,
+        doctorPosition: document.getElementById('doctorPosition').value,
+        hospitalName: document.getElementById('hospitalName').value,
+        leaveStart: document.getElementById('leaveStart').value,
+        leaveEnd: document.getElementById('leaveEnd').value,
+        lawyerEnrollNo: document.getElementById('lawyerEnrollNo').value,
+        lawFirmName: document.getElementById('lawFirmName').value,
+        professionOther: document.getElementById('professionOther').value,
+        hotelName: document.getElementById('hotelName').value,
+        hotelAddress: document.getElementById('hotelAddress').value,
+        travelHistoryList: document.getElementById('travelHistoryList').value,
+        visitedCountryBefore: document.getElementById('visitedCountryBefore').checked,
+        lastCountryVisit: document.getElementById('lastCountryVisit').value,
+        previousVisaNo: document.getElementById('previousVisaNo').value,
+        participants: []
+      };
+
+      // Build address strings
+      formData.permanentAddress = `${formData.permanentAddress1}${formData.permanentAddress2 ? ', ' + formData.permanentAddress2 : ''}, ${formData.permanentCity}, ${formData.permanentState} ${formData.permanentZip}`;
+
+      if (formData.hasPresentAddress) {
+        formData.currentAddress = `${formData.presentAddress1}${formData.presentAddress2 ? ', ' + formData.presentAddress2 : ''}, ${formData.presentCity}, ${formData.presentState} ${formData.presentZip}`;
+      } else {
+        formData.currentAddress = formData.permanentAddress;
+      }
+
+      // Collect participants data
+      document.querySelectorAll('#participantsTableBody tr').forEach(row => {
+        const participant = {
+          name: row.querySelector('.participant-name').value,
+          relationship: row.querySelector('.participant-relationship').value,
+          passportNo: row.querySelector('.participant-passport').value,
+          dob: row.querySelector('.participant-dob').value
+        };
+        formData.participants.push(participant);
+      });
+
+      // Format dates
+      const formatDate = (dateString) => {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      };
+
+      // Get current date
+      const currentDate = new Date();
+      const formattedCurrentDate = currentDate.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+
+      // Generate cover letter content
+      let letter = `${formattedCurrentDate}\n`;
+      letter += `To\nThe Visa Officer\nRoyal Thai Embassy\nDhaka, Bangladesh\n`;
+      letter += `<span class="highlight">Subject:</span> Application for Thailand ${formData.visaType} from ${formatDate(formData.travelStart)} to ${formatDate(formData.travelEnd)}\n`;
+      letter += `Dear Sir/Madam,\n`;
+
+      // Solo vs Family block
+      if (formData.participants.length > 0) {
+        letter += `I, <span class="highlight">${formData.fullName}</span>, a <span class="highlight">${formData.nationality}</span> national holding Passport No. <span class="highlight">${formData.passportNo}</span>, respectfully submit this application <span class="highlight">along with my family</span> for a <span class="highlight">${formData.visaType}</span> to visit Thailand from <span class="highlight">${formatDate(formData.travelStart)}</span> to <span class="highlight">${formatDate(formData.travelEnd)}</span>. The purpose of our visit is to spend a short personal holiday in <span class="highlight">${formData.destinationCity}</span>.\nBelow is the list of applicants:\n`;
+
+        letter += `<table class="preview-table">
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>Name</th>
+                                    <th>Relationship</th>
+                                    <th>Passport No.</th>
+                                    <th>Date of Birth</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>${formData.fullName}</td>
+                                    <td>Primary Applicant</td>
+                                    <td>${formData.passportNo}</td>
+                                    <td>-</td>
+                                </tr>
+                            `;
+
+        formData.participants.forEach((participant, index) => {
+          letter += `<tr>
+                                    <td>${index + 2}</td>
+                                    <td>${participant.name}</td>
+                                    <td>${participant.relationship}</td>
+                                    <td>${participant.passportNo}</td>
+                                    <td>${formatDate(participant.dob)}</td>
+                                </tr>
+                            `;
+        });
+        letter += `</table>`;
+        letter += `My permanent address is <span class="highlight">${formData.permanentAddress}</span> and I am currently living at <span class="highlight">${formData.currentAddress}</span>.\n`;
+        letter += `I will bear <span class="highlight">all expenses</span> for this trip. `;
+      } else {
+        letter += `I, <span class="highlight">${formData.fullName}</span>, a <span class="highlight">${formData.nationality}</span> national holding Passport No. <span class="highlight">${formData.passportNo}</span>, respectfully submit this application for a <span class="highlight">${formData.visaType}</span> to visit Thailand from <span class="highlight">${formatDate(formData.travelStart)}</span> to <span class="highlight">${formatDate(formData.travelEnd)}</span>. During this period, I intend to enjoy a short holiday in <span class="highlight">${formData.destinationCity}</span>.\n`;
+        letter += `My permanent address is <span class="highlight">${formData.permanentAddress}</span> and I am currently living at <span class="highlight">${formData.currentAddress}</span>.\n`;
+        letter += `I will bear <span class="highlight">all expenses</span> for this trip. `;
+      }
+
+      // Profession-specific paragraph
+      if (formData.profession === 'Employee') {
+        letter += `Professionally, I am employed as <span class="highlight">${formData.jobTitle}</span> at <span class="highlight">${formData.employerName}</span> (since ${formatDate(formData.employmentStart)}), located at ${formData.officeLocation}. My employer has issued a <span class="highlight">No-Objection Certificate</span> approving my leave for the mentioned travel period and confirming my resumption of duties on return.\n`;
+      } else if (formData.profession === 'Business') {
+        letter += `Professionally, I serve as the <span class="highlight">${formData.businessRole}</span> of <span class="highlight">${formData.businessName}</span>, a <span class="highlight">${formData.businessNature}</span>, established in <span class="highlight">${formData.businessStartYear}</span> and located in ${formData.businessLocation}.\n`;
+      } else if (formData.profession === 'Doctor') {
+        letter += `I am a licensed medical practitioner (BMDC Reg No. <span class="highlight">${formData.doctorRegNo}</span>) and currently serve as <span class="highlight">${formData.doctorPosition}</span> at <span class="highlight">${formData.hospitalName}</span>. The hospital administration has granted me leave from <span class="highlight">${formatDate(formData.leaveStart)}</span> to <span class="highlight">${formatDate(formData.leaveEnd)}</span>, as evidenced by the enclosed letter.\n`;
+      } else if (formData.profession === 'Lawyer') {
+        letter += `I am an advocate enrolled with the Bangladesh Bar Council (Enrollment No. <span class="highlight">${formData.lawyerEnrollNo}</span>) and the founding partner of <span class="highlight">${formData.lawFirmName}</span>. A letter from the Managing Committee and proof of chamber registration are attached, confirming approval of my leave for this travel period.\n`;
+      } else {
+        letter += `I am engaged in <span class="highlight">${formData.professionOther}</span>, and supporting documents have been provided accordingly.\n`;
+      }
+
+      letter += `I have booked (not confirmed) return air tickets between <span class="highlight">${formData.departureCity}</span> and <span class="highlight">${formData.destinationCity}</span> and reserved accommodation at <span class="highlight">${formData.hotelName}</span>, ${formData.hotelAddress}.\n`;
+
+      // Travel history block
+      const countryName = formData.country || 'Thailand';
+
+      if (formData.visitedCountryBefore && formData.lastCountryVisit && formData.previousVisaNo) {
+        letter += `I have previously traveled to several countries, including <span class="highlight">${formData.travelHistoryList}</span>. Notably, I visited ${countryName} last on <span class="highlight">${formatDate(formData.lastCountryVisit)}</span> with Visa Number <span class="highlight">${formData.previousVisaNo}</span>, which was a pleasant and memorable experience. I complied with all immigration rules during that visit and plan to do the same on this trip.\n`;
+      } else if (formData.travelHistoryList.trim()) {
+        letter += `I have previously traveled to several countries, including <span class="highlight">${formData.travelHistoryList}</span> for tourism and professional purposes. I look forward to experiencing ${countryName}'s culture and hospitality for the first time.\n`;
+      } else {
+        letter += `This will be my first international trip, and I am genuinely excited to visit ${countryName} to explore its natural beauty, cultural heritage, and tourist attractions.\n`;
+      }
+
+      letter += `I kindly request you to review the enclosed documents and consider granting us the requested visas. Should you need any further information, please feel free to contact me using the details below.\n`;
+      letter += `Sincerely,\n`;
+      letter += `<span class="highlight">${formData.fullName}</span>\n`;
+
+      // Add profession-specific signature line
+      if (formData.profession === 'Employee') {
+        letter += `<span class="highlight">${formData.jobTitle}</span>\n${formData.employerName}\n`;
+      } else if (formData.profession === 'Business') {
+        letter += `<span class="highlight">${formData.businessRole}</span>\n${formData.businessName}\n`;
+      } else if (formData.profession === 'Doctor') {
+        letter += `<span class="highlight">${formData.doctorPosition}</span>\n${formData.hospitalName}\n`;
+      } else if (formData.profession === 'Lawyer') {
+        letter += `Advocate & Partner, <span class="highlight">${formData.lawFirmName}</span>\n`;
+      }
+
+      letter += `Mobile: ${formData.mobile}\n`;
+      letter += `Email: ${formData.email}`;
+
+      // Display the letter
+      document.getElementById('letterPreview').innerHTML = letter;
+
+      // Switch to preview tab
+      openTab('preview-tab');
+    }
+
+    // Print the letter
+    function printLetter() {
+      const printContent = document.getElementById('letterPreview').innerHTML;
+      const originalContent = document.body.innerHTML;
+
+      document.body.innerHTML = `
+                <style>
+                    body {
+                        font-family: 'Times New Roman', Times, serif;
+                        font-size: 12pt;
+                        line-height: 1.6;
+                        padding: 20px;
+                    }
+                    .highlight {
+                        padding: 0 2px;
+                        font-weight: bold;
+                    }
+                    .preview-table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin: 15px 0;
+                        font-size: 12px;
+                    }
+                    .preview-table th {
+                        background: #e3f2fd;
+                        padding: 8px 12px;
+                        text-align: left;
+                        border: 1px solid #bbdefb;
+                    }
+                    .preview-table td {
+                        padding: 8px 12px;
+                        border: 1px solid #bbdefb;
+                    }
+                    @media print {
+                        .no-print {
+                            display: none;
+                        }
+                    }
+                </style>
+                <div>${printContent}</div>
+                <div class="no-print" style="text-align:center;margin-top:20px;">
+                    <button onclick="window.location.reload()" style="padding:10px 20px;background:#1e88e5;color:white;border:none;border-radius:4px;cursor:pointer;">
+                        Back to Generator
+                    </button>
+                </div>
+            `;
+
+      window.print();
+      document.body.innerHTML = originalContent;
+    }
+
+    // Initialize the form
+    window.onload = function () {
+      // Set today's date for travel start
+      const today = new Date();
+      const nextWeek = new Date();
+      nextWeek.setDate(today.getDate() + 7);
+      const twoWeeks = new Date();
+      twoWeeks.setDate(today.getDate() + 14);
+
+      document.getElementById('travelStart').valueAsDate = nextWeek;
+      document.getElementById('travelEnd').valueAsDate = twoWeeks;
+
+      // Set a sample employment date
+      const employmentStart = new Date();
+      employmentStart.setFullYear(today.getFullYear() - 2);
+      employmentStart.setMonth(0);
+      employmentStart.setDate(15);
+      document.getElementById('employmentStart').valueAsDate = employmentStart;
+
+      // Set date of issue to today
+      document.getElementById('dateOfIssue').valueAsDate = today;
+
+      // First check if there's any saved application in localStorage
+      const savedKeys = Object.keys(localStorage);
+      const visaFormKeys = savedKeys.filter(key => key.startsWith('visaForm_'));
+
+      if (visaFormKeys.length > 0) {
+        // Load the most recent application
+        const latestKey = visaFormKeys[visaFormKeys.length - 1];
+        const savedData = JSON.parse(localStorage.getItem(latestKey));
+
+        // Extract PNRs from saved data
+        if (savedData.airlinePNR) {
+          const pnrMatch = savedData.airlinePNR.match(/(\w{6})/);
+          if (pnrMatch) {
+            originalAirlinePNR = pnrMatch[1];
+          }
+        }
+
+        if (savedData.galileoPNR) {
+          originalGalileoPNR = savedData.galileoPNR;
+        }
+
+        // Set country and generate UUID
+        setTimeout(() => {
+          if (savedData.country) {
+            document.getElementById('country').value = savedData.country;
+            generateUUID();
+            loadFromLocalStorage();
+          } else {
+            // Generate fresh UUID for Thailand (default selection)
+            generateUUID();
+          }
+          updateCountryNameLabels();
+        }, 100);
+      } else {
+        // Generate fresh UUID for Thailand (default selection)
+        setTimeout(() => {
+          generateUUID();
+        }, 100);
+      }
+
+      // Add sample participant
+      addParticipant();
+
+      // Add sample air ticket passenger and flight itinerary
+      addAirTicketPassenger();
+      addFlightItinerary();
+
+      // Set default values for sample participant
+      setTimeout(() => {
+        const nameInputs = document.querySelectorAll('.participant-name');
+        const passportInputs = document.querySelectorAll('.participant-passport');
+        const dobInputs = document.querySelectorAll('.participant-dob');
+        const relationshipSelects = document.querySelectorAll('.participant-relationship');
+
+        if (nameInputs[0]) nameInputs[0].value = "Sarah Johnson";
+        if (passportInputs[0]) passportInputs[0].value = "CD987654";
+        if (dobInputs[0]) {
+          const dob = new Date();
+          dob.setFullYear(today.getFullYear() - 35);
+          dobInputs[0].valueAsDate = dob;
+        }
+        if (relationshipSelects[0]) relationshipSelects[0].value = "Spouse";
+
+        // Set travel history defaults
+        document.getElementById('visitedCountryBefore').checked = true;
+
+        // Set a sample last visit date
+        const lastVisit = new Date();
+        lastVisit.setFullYear(today.getFullYear() - 1);
+        lastVisit.setMonth(5);
+        lastVisit.setDate(15);
+        document.getElementById('lastCountryVisit').valueAsDate = lastVisit;
+
+        // Call toggle to show fields
+        toggleCountryVisitFields();
+
+        // Update country labels
+        updateCountryNameLabels();
+
+        updateCompletion();
+      }, 200);
+    };
+  </script>
+</body>
+
+</html>
