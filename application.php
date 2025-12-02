@@ -247,6 +247,14 @@
       background: #2f855a;
     }
 
+    .btn-warning {
+      background: #ed8936;
+    }
+
+    .btn-warning:hover {
+      background: #dd6b20;
+    }
+
     .btn-container {
       display: flex;
       gap: 15px;
@@ -341,34 +349,78 @@
       background: #c53030;
     }
 
-    .letter-preview {
-      background: white;
+    /* Editor Toolbar */
+    .editor-toolbar {
+      display: flex;
+      background: #f8f9fa;
       border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      padding: 40px;
+      border-radius: 8px 8px 0 0;
+      padding: 10px;
+      gap: 5px;
+      flex-wrap: wrap;
+      border-bottom: none;
+    }
+
+    .tool-btn {
+      padding: 8px 12px;
+      background: white;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      cursor: pointer;
+      color: #374151;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 36px;
+      min-height: 36px;
+    }
+
+    .tool-btn:hover {
+      background: #f3f4f6;
+      border-color: #9ca3af;
+    }
+
+    .tool-btn.active {
+      background: #e5e7eb;
+      border-color: #6b7280;
+    }
+
+    .tool-separator {
+      width: 1px;
+      background: #d1d5db;
+      margin: 0 5px;
+    }
+
+    .letter-preview-container {
+      border: 1px solid #e0e0e0;
+      border-radius: 0 0 8px 8px;
+      overflow: hidden;
+      background: white;
+    }
+
+    .letter-preview {
       min-height: 600px;
+      padding: 40px;
       font-family: 'Times New Roman', Times, serif;
       font-size: 16px;
       line-height: 1.8;
       white-space: pre-wrap;
-      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
-      position: relative;
+      outline: none;
+      overflow-y: auto;
+      max-height: 700px;
     }
 
-    .letter-preview::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #0d47a1, #1e88e5);
-      border-radius: 4px 4px 0 0;
+    .letter-preview:empty:before {
+      content: "Your generated cover letter will appear here after you fill out the form and click 'Generate Cover Letter'. You can edit this text directly.";
+      color: #9ca3af;
+      font-style: italic;
     }
 
     .highlight {
-      padding: 0 2px;
-      font-weight: bold;
+      background-color: #fff3cd;
+      padding: 0 4px;
+      border-radius: 2px;
     }
 
     .actions {
@@ -724,12 +776,54 @@
     /* When checkbox is checked -> slider ON */
     #visitedCountryBefore:checked+.switch-label .switch-slider {
       background: #4caf50;
-      /* Green ON color */
     }
 
     /* Move the circle to the right when checked */
     #visitedCountryBefore:checked+.switch-label .switch-slider::before {
       transform: translateX(23px);
+    }
+
+    /* Filename input */
+    .filename-input {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 20px 0;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+
+    .filename-input input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #cbd5e0;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    /* Toast notification */
+    #toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #10b981;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    #toast.show {
+      transform: translateY(0);
+      opacity: 1;
     }
   </style>
 </head>
@@ -772,8 +866,7 @@
         <div id="uuidContainer" class="uuid-display mb-4" style="display: none">
           <div>
             <i class="fas fa-fingerprint"></i>
-            <strong>Application ID:</strong>
-            <span id="generatedUUID"></span>
+            <strong>Application ID:</strong> <span id="generatedUUID"></span>
           </div>
           <button type="button" class="copy-btn" onclick="copyUUID()">
             <i class="far fa-copy"></i> Copy
@@ -796,9 +889,24 @@
               </select>
             </div>
             <div class="input-group">
-              <label for="fullName" class="required">Full Name</label>
-              <input type="text" id="fullName" required placeholder="John Doe"
+              <label for="givenName" class="required">Given Name</label>
+              <input type="text" id="givenName" required placeholder="John"
                 oninput="updateCompletion(); saveToLocalStorage()">
+            </div>
+            <div class="input-group">
+              <label for="surName" class="required">Surname</label>
+              <input type="text" id="surName" required placeholder="Doe"
+                oninput="updateCompletion(); saveToLocalStorage()">
+            </div>
+            <div class="input-group">
+              <label for="salutation" class="required">Salutation</label>
+              <select id="salutation" name="salutation" required onchange="updateCompletion(); saveToLocalStorage()">
+                <option value="" disabled selected>Select</option>
+                <option value="Mr.">Mr.</option>
+                <option value="Ms.">Ms.</option>
+                <option value="Mrs.">Mrs.</option>
+                <option value="Miss">Miss</option>
+              </select>
             </div>
             <div class="input-group">
               <label for="nationality" class="required">Nationality</label>
@@ -865,7 +973,6 @@
             </label>
             <label for="hasPresentAddress">Has different present address</label>
           </div>
-
           <div id="presentAddressFields" class="conditional-section" style="display: none">
             <div class="address-grid">
               <div class="input-group">
@@ -1071,7 +1178,9 @@
             <table class="participant-table">
               <thead>
                 <tr>
-                  <th>Name</th>
+                  <th>Salutation</th>
+                  <th>Given Name</th>
+                  <th>Surname</th>
                   <th>Relationship</th>
                   <th>Passport No.</th>
                   <th>Date of Birth</th>
@@ -1241,15 +1350,76 @@
       </div>
     </div>
 
-    <!-- Preview Tab -->
+    <!-- Preview Tab with Enhanced Editor -->
     <div id="preview-tab" class="tab-content">
-      <div class="letter-preview" id="letterPreview">
-        <p>Your generated cover letter will appear here after you fill out the form and click "Generate Cover Letter".
-        </p>
+      <!-- Filename Input -->
+      <div class="filename-input">
+        <label for="filename"><strong>Filename:</strong></label>
+        <input type="text" id="filename" placeholder="Enter filename">
+        <span>.doc</span>
+      </div>
+
+      <!-- Editor Toolbar -->
+      <div class="editor-toolbar">
+        <button class="tool-btn" onclick="execCmd('bold')" title="Bold">
+          <i class="fas fa-bold"></i>
+        </button>
+        <button class="tool-btn" onclick="execCmd('italic')" title="Italic">
+          <i class="fas fa-italic"></i>
+        </button>
+        <button class="tool-btn" onclick="execCmd('underline')" title="Underline">
+          <i class="fas fa-underline"></i>
+        </button>
+        <div class="tool-separator"></div>
+        <button class="tool-btn" onclick="execCmd('justifyLeft')" title="Align Left">
+          <i class="fas fa-align-left"></i>
+        </button>
+        <button class="tool-btn" onclick="execCmd('justifyCenter')" title="Align Center">
+          <i class="fas fa-align-center"></i>
+        </button>
+        <button class="tool-btn" onclick="execCmd('justifyRight')" title="Align Right">
+          <i class="fas fa-align-right"></i>
+        </button>
+        <button class="tool-btn" onclick="execCmd('justifyFull')" title="Justify">
+          <i class="fas fa-align-justify"></i>
+        </button>
+        <div class="tool-separator"></div>
+        <button class="tool-btn" onclick="execCmd('insertUnorderedList')" title="Bullet List">
+          <i class="fas fa-list-ul"></i>
+        </button>
+        <button class="tool-btn" onclick="execCmd('insertOrderedList')" title="Numbered List">
+          <i class="fas fa-list-ol"></i>
+        </button>
+        <div class="tool-separator"></div>
+        <select class="tool-btn" onchange="execCmd('fontSize', this.value)" title="Font Size">
+          <option value="">Size</option>
+          <option value="1">8pt</option>
+          <option value="2">10pt</option>
+          <option value="3">12pt</option>
+          <option value="4">14pt</option>
+          <option value="5">18pt</option>
+          <option value="6">24pt</option>
+          <option value="7">36pt</option>
+        </select>
+        <div class="tool-separator"></div>
+        <button class="tool-btn" onclick="clearFormatting()" title="Clear Formatting">
+          <i class="fas fa-eraser"></i>
+        </button>
+      </div>
+
+      <!-- Letter Preview (Editable) -->
+      <div class="letter-preview-container">
+        <div class="letter-preview" id="letterPreview" contenteditable="true">
+          Your generated cover letter will appear here after you fill out the form and click "Generate Cover Letter".
+          You can edit this text directly.
+        </div>
       </div>
 
       <div class="actions">
-        <button class="btn" onclick="printLetter()">
+        <button class="btn" onclick="exportToWord()">
+          <i class="fas fa-file-word"></i> Export to Word
+        </button>
+        <button class="btn btn-warning" onclick="printLetter()">
           <i class="fas fa-print"></i> Print Letter
         </button>
         <button class="btn btn-secondary" onclick="openTab('form-tab')">
@@ -1257,6 +1427,12 @@
         </button>
       </div>
     </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span>Document downloaded successfully!</span>
   </div>
 
   <script>
@@ -1301,12 +1477,12 @@
       const country = document.getElementById('country').value;
       if (!country) return;
 
-      // Generate airline PNR (format: 2 digits, 1 letter, 1 digit, 1 letter, 1 digit)
+      // Ekhon aar PNR generate korar dorkar nai, karon window.onload e already generate hoyeche
+      // Just check korbo jodi kono karon e empty thake
       if (!originalAirlinePNR) {
         originalAirlinePNR = generateAirlinePNR();
       }
 
-      // Generate Galileo PNR (format: 2 letters, 2 digits, 1 letter, 1 digit)
       if (!originalGalileoPNR) {
         originalGalileoPNR = generateGalileoPNR();
       }
@@ -1321,11 +1497,9 @@
       document.getElementById('generatedUUID').textContent = applicationUUID;
       document.getElementById('uuidContainer').style.display = 'flex';
 
-      // Set the PNR values in the air ticket tab (only once)
-      if (!document.getElementById('airlinePNR').value) {
-        document.getElementById('airlinePNR').value = `${originalAirlinePNR} (TG - THAI)`;
-        document.getElementById('galileoPNR').value = originalGalileoPNR;
-      }
+      // Set the PNR values in the air ticket tab
+      document.getElementById('airlinePNR').value = `${originalAirlinePNR} (TG - THAI)`;
+      document.getElementById('galileoPNR').value = originalGalileoPNR;
 
       // Set current date for date of issue (only if not already set)
       if (!document.getElementById('dateOfIssue').value) {
@@ -1337,7 +1511,7 @@
       saveToLocalStorage();
     }
 
-    // When country changes, only update country code in UUID
+    // When country changes, only update country code in UUID, PNR thik thakbe
     function updateCountry() {
       const country = document.getElementById('country').value;
       if (!country || !originalAirlinePNR || !originalGalileoPNR) return;
@@ -1345,20 +1519,8 @@
       // Get country code
       const countryCode = countryCodes[country] || country.substring(0, 3).toUpperCase();
 
-      // Update only the country code in UUID
-      if (applicationUUID) {
-        const uuidParts = applicationUUID.split('-');
-        if (uuidParts.length >= 2) {
-          uuidParts[1] = countryCode; // Update country code (second part)
-          applicationUUID = uuidParts.join('-');
-        } else {
-          // If UUID format is wrong, regenerate full UUID
-          applicationUUID = `TRH-${countryCode}-PNR-${originalAirlinePNR}-${originalGalileoPNR}`;
-        }
-      } else {
-        // If no UUID exists yet, create new one
-        applicationUUID = `TRH-${countryCode}-PNR-${originalAirlinePNR}-${originalGalileoPNR}`;
-      }
+      // Update only the country code in UUID, PNR change hobena
+      applicationUUID = `TRH-${countryCode}-PNR-${originalAirlinePNR}-${originalGalileoPNR}`;
 
       // Display updated UUID
       document.getElementById('generatedUUID').textContent = applicationUUID;
@@ -1366,7 +1528,6 @@
 
       // Update country name labels
       updateCountryNameLabels();
-
       updateCompletion();
       saveToLocalStorage();
     }
@@ -1375,7 +1536,6 @@
     function generateAirlinePNR() {
       const digits = '0123456789';
       const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
       let pnr = '';
 
       // First 2 digits
@@ -1402,7 +1562,6 @@
     function generateGalileoPNR() {
       const digits = '0123456789';
       const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
       let pnr = '';
 
       // First 2 letters
@@ -1427,7 +1586,7 @@
     // Copy UUID to clipboard
     function copyUUID() {
       navigator.clipboard.writeText(applicationUUID).then(() => {
-        alert('Application ID copied to clipboard!');
+        showToast('Application ID copied to clipboard!');
       });
     }
 
@@ -1438,13 +1597,11 @@
 
       if (isChecked) {
         countryVisitFields.style.display = 'block';
-
         // Make fields required when shown
         document.getElementById('lastCountryVisit').setAttribute('required', 'required');
         document.getElementById('previousVisaNo').setAttribute('required', 'required');
       } else {
         countryVisitFields.style.display = 'none';
-
         // Remove required when hidden
         document.getElementById('lastCountryVisit').removeAttribute('required');
         document.getElementById('previousVisaNo').removeAttribute('required');
@@ -1473,7 +1630,8 @@
       const formData = {
         uuid: applicationUUID,
         country: document.getElementById('country').value,
-        fullName: document.getElementById('fullName').value,
+        givenName: document.getElementById('givenName').value,
+        surName: document.getElementById('surName').value,
         nationality: document.getElementById('nationality').value,
         passportNo: document.getElementById('passportNo').value,
         mobile: document.getElementById('mobile').value,
@@ -1529,7 +1687,9 @@
       // Collect participants data
       document.querySelectorAll('#participantsTableBody tr').forEach(row => {
         const participant = {
-          name: row.querySelector('.participant-name').value,
+          salutation: row.querySelector('.participant-salutation').value,
+          givenName: row.querySelector('.participant-given-name').value,
+          surName: row.querySelector('.participant-sur-name').value,
           relationship: row.querySelector('.participant-relationship').value,
           passportNo: row.querySelector('.participant-passport').value,
           dob: row.querySelector('.participant-dob').value
@@ -1564,7 +1724,6 @@
 
       // Save to local storage
       localStorage.setItem(`visaForm_${applicationUUID}`, JSON.stringify(formData));
-      console.log('Data saved to local storage with UUID:', applicationUUID);
     }
 
     // Load form data from local storage
@@ -1590,7 +1749,8 @@
 
       // Load basic form data
       document.getElementById('country').value = formData.country || '';
-      document.getElementById('fullName').value = formData.fullName || '';
+      document.getElementById('givenName').value = formData.givenName || '';
+      document.getElementById('surName').value = formData.surName || '';
       document.getElementById('nationality').value = formData.nationality || '';
       document.getElementById('passportNo').value = formData.passportNo || '';
       document.getElementById('mobile').value = formData.mobile || '';
@@ -1646,7 +1806,9 @@
           addParticipant();
           const rows = document.querySelectorAll('#participantsTableBody tr');
           const lastRow = rows[rows.length - 1];
-          lastRow.querySelector('.participant-name').value = participant.name || '';
+          lastRow.querySelector('.participant-salutation').value = participant.salutation || '';
+          lastRow.querySelector('.participant-given-name').value = participant.givenName || '';
+          lastRow.querySelector('.participant-sur-name').value = participant.surName || '';
           lastRow.querySelector('.participant-relationship').value = participant.relationship || '';
           lastRow.querySelector('.participant-passport').value = participant.passportNo || '';
           lastRow.querySelector('.participant-dob').value = participant.dob || '';
@@ -1702,6 +1864,7 @@
       } else {
         presentAddressFields.style.display = 'none';
       }
+
       updateCompletion();
     }
 
@@ -1737,7 +1900,9 @@
       const row = document.createElement('tr');
 
       row.innerHTML = `
-                <td><input type="text" placeholder="Full Name" class="participant-name" required oninput="saveToLocalStorage()"></td>
+                <td><input type="text" placeholder="Salutation" class="participant-salutation" required oninput="saveToLocalStorage()"></td>
+                <td><input type="text" placeholder="Given Name" class="participant-given-name" required oninput="saveToLocalStorage()"></td>
+                <td><input type="text" placeholder="Surname" class="participant-sur-name" required oninput="saveToLocalStorage()"></td>
                 <td>
                     <select class="participant-relationship" required onchange="saveToLocalStorage()">
                         <option value="">Select</option>
@@ -1906,7 +2071,7 @@
       }
 
       // Check participants
-      const participants = document.querySelectorAll('.participant-name');
+      const participants = document.querySelectorAll('.participant-given-name');
       participants.forEach(participant => {
         if (participant.value.trim() !== '') {
           completed++;
@@ -1925,12 +2090,15 @@
         document.getElementById('airTicketTableBody').innerHTML = '';
         document.getElementById('flightItineraryTableBody').innerHTML = '';
         document.getElementById('uuidContainer').style.display = 'none';
+        document.getElementById('letterPreview').innerHTML = 'Your generated cover letter will appear here after you fill out the form and click "Generate Cover Letter". You can edit this text directly.';
+
         applicationUUID = '';
         originalAirlinePNR = '';
         originalGalileoPNR = '';
         participantCount = 0;
         airTicketPassengerCount = 0;
         flightItineraryCount = 0;
+
         toggleProfessionFields();
         toggleCountryVisitFields();
         updateCompletion();
@@ -1942,11 +2110,51 @@
       }
     }
 
+    function saveLocalStorageDataToDB() {
+      // 1. Retrieve data from localStorage
+      const savedData = localStorage.getItem(`visaForm_${applicationUUID}`);
+
+      if (!savedData) {
+        alert("No data found in localStorage!");
+        return;
+      }
+
+      const formData = JSON.parse(savedData);
+
+      // 2. Send to PHP using fetch
+      fetch("store.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      })
+        .then(res => res.json())
+        .then(result => {
+          if (result.success) {
+            // 3. Remove from localStorage
+            localStorage.removeItem(`visaForm_${applicationUUID}`);
+            alert("Saved in DB & localStorage cleared!");
+          } else {
+            console.log(result);
+            alert("Database save failed: " + result.message);
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          alert("Error saving data.");
+        });
+    }
+
+
     // Generate cover letter
     function generateCoverLetter() {
+      document.getElementById('filename').value = `visa_form_${applicationUUID}`;
+      saveLocalStorageDataToDB();
       // Collect form data
       const formData = {
-        fullName: document.getElementById('fullName').value,
+        givenName: document.getElementById('givenName').value,
+        surName: document.getElementById('surName').value,
         nationality: document.getElementById('nationality').value,
         country: document.getElementById('country').value,
         passportNo: document.getElementById('passportNo').value,
@@ -2007,7 +2215,9 @@
       // Collect participants data
       document.querySelectorAll('#participantsTableBody tr').forEach(row => {
         const participant = {
-          name: row.querySelector('.participant-name').value,
+          salutation: row.querySelector('.participant-salutation').value,
+          givenName: row.querySelector('.participant-given-name').value,
+          surName: row.querySelector('.participant-sur-name').value,
           relationship: row.querySelector('.participant-relationship').value,
           passportNo: row.querySelector('.participant-passport').value,
           dob: row.querySelector('.participant-dob').value
@@ -2024,107 +2234,206 @@
 
       // Get current date
       const currentDate = new Date();
-      const formattedCurrentDate = currentDate.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      });
+      const formattedCurrentDate = currentDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
       // Generate cover letter content
-      let letter = `${formattedCurrentDate}\n`;
-      letter += `To\nThe Visa Officer\nRoyal Thai Embassy\nDhaka, Bangladesh\n`;
-      letter += `<span class="highlight">Subject:</span> Application for Thailand ${formData.visaType} from ${formatDate(formData.travelStart)} to ${formatDate(formData.travelEnd)}\n`;
-      letter += `Dear Sir/Madam,\n`;
+      let letter = `<div style="font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 1.5;">`;
+      letter += `<p style="text-align: right;">${formattedCurrentDate}</p>`;
+      letter += `<p>To<br>The Visa Officer<br>Royal Thai Embassy<br>Dhaka, Bangladesh</p>`;
+      letter += `<p><strong>Subject:</strong> Application for Thailand ${formData.visaType} from ${formatDate(formData.travelStart)} to ${formatDate(formData.travelEnd)}</p>`;
+      letter += `<p>Dear Sir/Madam,</p>`;
 
       // Solo vs Family block
       if (formData.participants.length > 0) {
-        letter += `I, <span class="highlight">${formData.fullName}</span>, a <span class="highlight">${formData.nationality}</span> national holding Passport No. <span class="highlight">${formData.passportNo}</span>, respectfully submit this application <span class="highlight">along with my family</span> for a <span class="highlight">${formData.visaType}</span> to visit Thailand from <span class="highlight">${formatDate(formData.travelStart)}</span> to <span class="highlight">${formatDate(formData.travelEnd)}</span>. The purpose of our visit is to spend a short personal holiday in <span class="highlight">${formData.destinationCity}</span>.\nBelow is the list of applicants:\n`;
-
-        letter += `<table class="preview-table">
-                                <tr>
-                                    <th>S/N</th>
-                                    <th>Name</th>
-                                    <th>Relationship</th>
-                                    <th>Passport No.</th>
-                                    <th>Date of Birth</th>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>${formData.fullName}</td>
-                                    <td>Primary Applicant</td>
-                                    <td>${formData.passportNo}</td>
-                                    <td>-</td>
-                                </tr>
-                            `;
+        letter += `<p>I, <strong>${formData.givenName} ${formData.surName}</strong>, a <strong>${formData.nationality}</strong> national holding Passport No. <strong>${formData.passportNo}</strong>, respectfully submit this application <strong>along with my family</strong> for a <strong>${formData.visaType}</strong> to visit Thailand from <strong>${formatDate(formData.travelStart)}</strong> to <strong>${formatDate(formData.travelEnd)}</strong>. The purpose of our visit is to spend a short personal holiday in <strong>${formData.destinationCity}</strong>.</p>`;
+        letter += `<p>Below is the list of applicants:</p>`;
+        letter += `<table style="width: 100%; border-collapse: collapse; margin: 10px 0; border: 1px solid #000;">
+                    <tr style="background-color: #e3f2fd;">
+                        <th style="border: 1px solid #000; padding: 8px;">S/N</th>
+                        <th style="border: 1px solid #000; padding: 8px;">Name</th>
+                        <th style="border: 1px solid #000; padding: 8px;">Relationship</th>
+                        <th style="border: 1px solid #000; padding: 8px;">Passport No.</th>
+                        <th style="border: 1px solid #000; padding: 8px;">Date of Birth</th>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 8px;">1</td>
+                        <td style="border: 1px solid #000; padding: 8px;">${formData.givenName} ${formData.surName}</td>
+                        <td style="border: 1px solid #000; padding: 8px;">Primary Applicant</td>
+                        <td style="border: 1px solid #000; padding: 8px;">${formData.passportNo}</td>
+                        <td style="border: 1px solid #000; padding: 8px;">-</td>
+                    </tr>`;
 
         formData.participants.forEach((participant, index) => {
           letter += `<tr>
-                                    <td>${index + 2}</td>
-                                    <td>${participant.name}</td>
-                                    <td>${participant.relationship}</td>
-                                    <td>${participant.passportNo}</td>
-                                    <td>${formatDate(participant.dob)}</td>
-                                </tr>
-                            `;
+                        <td style="border: 1px solid #000; padding: 8px;">${index + 2}</td>
+                        <td style="border: 1px solid #000; padding: 8px;">${participant.givenName} ${participant.surName}</td>
+                        <td style="border: 1px solid #000; padding: 8px;">${participant.relationship}</td>
+                        <td style="border: 1px solid #000; padding: 8px;">${participant.passportNo}</td>
+                        <td style="border: 1px solid #000; padding: 8px;">${formatDate(participant.dob)}</td>
+                    </tr>`;
         });
+
         letter += `</table>`;
-        letter += `My permanent address is <span class="highlight">${formData.permanentAddress}</span> and I am currently living at <span class="highlight">${formData.currentAddress}</span>.\n`;
-        letter += `I will bear <span class="highlight">all expenses</span> for this trip. `;
+        letter += `<p>My permanent address is <strong>${formData.permanentAddress}</strong> and I am currently living at <strong>${formData.currentAddress}</strong>.</p>`;
+        letter += `<p>I will bear <strong>all expenses</strong> for this trip. </p>`;
       } else {
-        letter += `I, <span class="highlight">${formData.fullName}</span>, a <span class="highlight">${formData.nationality}</span> national holding Passport No. <span class="highlight">${formData.passportNo}</span>, respectfully submit this application for a <span class="highlight">${formData.visaType}</span> to visit Thailand from <span class="highlight">${formatDate(formData.travelStart)}</span> to <span class="highlight">${formatDate(formData.travelEnd)}</span>. During this period, I intend to enjoy a short holiday in <span class="highlight">${formData.destinationCity}</span>.\n`;
-        letter += `My permanent address is <span class="highlight">${formData.permanentAddress}</span> and I am currently living at <span class="highlight">${formData.currentAddress}</span>.\n`;
-        letter += `I will bear <span class="highlight">all expenses</span> for this trip. `;
+        letter += `<p>I, <strong>${formData.givenName} ${formData.surName}</strong>, a <strong>${formData.nationality}</strong> national holding Passport No. <strong>${formData.passportNo}</strong>, respectfully submit this application for a <strong>${formData.visaType}</strong> to visit Thailand from <strong>${formatDate(formData.travelStart)}</strong> to <strong>${formatDate(formData.travelEnd)}</strong>. During this period, I intend to enjoy a short holiday in <strong>${formData.destinationCity}</strong>.</p>`;
+        letter += `<p>My permanent address is <strong>${formData.permanentAddress}</strong> and I am currently living at <strong>${formData.currentAddress}</strong>.</p>`;
+        letter += `<p>I will bear <strong>all expenses</strong> for this trip. </p>`;
       }
 
       // Profession-specific paragraph
       if (formData.profession === 'Employee') {
-        letter += `Professionally, I am employed as <span class="highlight">${formData.jobTitle}</span> at <span class="highlight">${formData.employerName}</span> (since ${formatDate(formData.employmentStart)}), located at ${formData.officeLocation}. My employer has issued a <span class="highlight">No-Objection Certificate</span> approving my leave for the mentioned travel period and confirming my resumption of duties on return.\n`;
+        letter += `<p>Professionally, I am employed as <strong>${formData.jobTitle}</strong> at <strong>${formData.employerName}</strong> (since ${formatDate(formData.employmentStart)}), located at ${formData.officeLocation}. My employer has issued a <strong>No-Objection Certificate</strong> approving my leave for the mentioned travel period and confirming my resumption of duties on return.</p>`;
       } else if (formData.profession === 'Business') {
-        letter += `Professionally, I serve as the <span class="highlight">${formData.businessRole}</span> of <span class="highlight">${formData.businessName}</span>, a <span class="highlight">${formData.businessNature}</span>, established in <span class="highlight">${formData.businessStartYear}</span> and located in ${formData.businessLocation}.\n`;
+        letter += `<p>Professionally, I serve as the <strong>${formData.businessRole}</strong> of <strong>${formData.businessName}</strong>, a <strong>${formData.businessNature}</strong>, established in <strong>${formData.businessStartYear}</strong> and located in ${formData.businessLocation}.</p>`;
       } else if (formData.profession === 'Doctor') {
-        letter += `I am a licensed medical practitioner (BMDC Reg No. <span class="highlight">${formData.doctorRegNo}</span>) and currently serve as <span class="highlight">${formData.doctorPosition}</span> at <span class="highlight">${formData.hospitalName}</span>. The hospital administration has granted me leave from <span class="highlight">${formatDate(formData.leaveStart)}</span> to <span class="highlight">${formatDate(formData.leaveEnd)}</span>, as evidenced by the enclosed letter.\n`;
+        letter += `<p>I am a licensed medical practitioner (BMDC Reg No. <strong>${formData.doctorRegNo}</strong>) and currently serve as <strong>${formData.doctorPosition}</strong> at <strong>${formData.hospitalName}</strong>. The hospital administration has granted me leave from <strong>${formatDate(formData.leaveStart)}</strong> to <strong>${formatDate(formData.leaveEnd)}</strong>, as evidenced by the enclosed letter.</p>`;
       } else if (formData.profession === 'Lawyer') {
-        letter += `I am an advocate enrolled with the Bangladesh Bar Council (Enrollment No. <span class="highlight">${formData.lawyerEnrollNo}</span>) and the founding partner of <span class="highlight">${formData.lawFirmName}</span>. A letter from the Managing Committee and proof of chamber registration are attached, confirming approval of my leave for this travel period.\n`;
+        letter += `<p>I am an advocate enrolled with the Bangladesh Bar Council (Enrollment No. <strong>${formData.lawyerEnrollNo}</strong>) and the founding partner of <strong>${formData.lawFirmName}</strong>. A letter from the Managing Committee and proof of chamber registration are attached, confirming approval of my leave for this travel period.</p>`;
       } else {
-        letter += `I am engaged in <span class="highlight">${formData.professionOther}</span>, and supporting documents have been provided accordingly.\n`;
+        letter += `<p>I am engaged in <strong>${formData.professionOther}</strong>, and supporting documents have been provided accordingly.</p>`;
       }
 
-      letter += `I have booked (not confirmed) return air tickets between <span class="highlight">${formData.departureCity}</span> and <span class="highlight">${formData.destinationCity}</span> and reserved accommodation at <span class="highlight">${formData.hotelName}</span>, ${formData.hotelAddress}.\n`;
+      letter += `<p>I have booked (not confirmed) return air tickets between <strong>${formData.departureCity}</strong> and <strong>${formData.destinationCity}</strong> and reserved accommodation at <strong>${formData.hotelName}</strong>, ${formData.hotelAddress}.</p>`;
 
       // Travel history block
       const countryName = formData.country || 'Thailand';
-
       if (formData.visitedCountryBefore && formData.lastCountryVisit && formData.previousVisaNo) {
-        letter += `I have previously traveled to several countries, including <span class="highlight">${formData.travelHistoryList}</span>. Notably, I visited ${countryName} last on <span class="highlight">${formatDate(formData.lastCountryVisit)}</span> with Visa Number <span class="highlight">${formData.previousVisaNo}</span>, which was a pleasant and memorable experience. I complied with all immigration rules during that visit and plan to do the same on this trip.\n`;
+        letter += `<p>I have previously travelled to several countries, including <strong>${formData.travelHistoryList}</strong>. Notably, I visited ${countryName} last on <strong>${formatDate(formData.lastCountryVisit)}</strong> with Visa Number <strong>${formData.previousVisaNo}</strong>, which was a pleasant and memorable experience. I complied with all immigration rules during that visit and plan to do the same on this trip.</p>`;
       } else if (formData.travelHistoryList.trim()) {
-        letter += `I have previously traveled to several countries, including <span class="highlight">${formData.travelHistoryList}</span> for tourism and professional purposes. I look forward to experiencing ${countryName}'s culture and hospitality for the first time.\n`;
+        letter += `<p>I have previously traveled to several countries, including <strong>${formData.travelHistoryList}</strong> for tourism and professional purposes. I look forward to experiencing ${countryName}'s culture and hospitality for the first time.</p>`;
       } else {
-        letter += `This will be my first international trip, and I am genuinely excited to visit ${countryName} to explore its natural beauty, cultural heritage, and tourist attractions.\n`;
+        letter += `<p>This will be my first international trip, and I am genuinely excited to visit ${countryName} to explore its natural beauty, cultural heritage, and tourist attractions.</p>`;
       }
 
-      letter += `I kindly request you to review the enclosed documents and consider granting us the requested visas. Should you need any further information, please feel free to contact me using the details below.\n`;
-      letter += `Sincerely,\n`;
-      letter += `<span class="highlight">${formData.fullName}</span>\n`;
+      letter += `<p>I kindly request you to review the enclosed documents and consider granting us the requested visas. Should you need any further information, please feel free to contact me using the details below.</p>`;
+      letter += `<p>Sincerely,<br><br><strong>${formData.givenName} ${formData.surName}</strong><br>`;
 
       // Add profession-specific signature line
       if (formData.profession === 'Employee') {
-        letter += `<span class="highlight">${formData.jobTitle}</span>\n${formData.employerName}\n`;
+        letter += `<strong>${formData.jobTitle}</strong><br>${formData.employerName}<br>`;
       } else if (formData.profession === 'Business') {
-        letter += `<span class="highlight">${formData.businessRole}</span>\n${formData.businessName}\n`;
+        letter += `<strong>${formData.businessRole}</strong><br>${formData.businessName}<br>`;
       } else if (formData.profession === 'Doctor') {
-        letter += `<span class="highlight">${formData.doctorPosition}</span>\n${formData.hospitalName}\n`;
+        letter += `<strong>${formData.doctorPosition}</strong><br>${formData.hospitalName}<br>`;
       } else if (formData.profession === 'Lawyer') {
-        letter += `Advocate & Partner, <span class="highlight">${formData.lawFirmName}</span>\n`;
+        letter += `Advocate & Partner, <strong>${formData.lawFirmName}</strong><br>`;
       }
 
-      letter += `Mobile: ${formData.mobile}\n`;
-      letter += `Email: ${formData.email}`;
+      letter += `Mobile: ${formData.mobile}<br>`;
+      letter += `Email: ${formData.email}</p>`;
+      letter += `</div>`;
 
       // Display the letter
       document.getElementById('letterPreview').innerHTML = letter;
 
       // Switch to preview tab
       openTab('preview-tab');
+      showToast('Cover letter generated successfully! You can now edit it further.');
+    }
+
+    // Rich Text Editor Functions
+    function execCmd(command, value = null) {
+      document.execCommand(command, false, value);
+
+      // Update toolbar button states
+      updateToolbarStates();
+    }
+
+    function clearFormatting() {
+      document.execCommand('removeFormat', false, null);
+      document.execCommand('unlink', false, null);
+    }
+
+    function updateToolbarStates() {
+      // Update bold button
+      const boldBtn = document.querySelector('[onclick*="bold"]');
+      if (document.queryCommandState('bold')) {
+        boldBtn.classList.add('active');
+      } else {
+        boldBtn.classList.remove('active');
+      }
+
+      // Update italic button
+      const italicBtn = document.querySelector('[onclick*="italic"]');
+      if (document.queryCommandState('italic')) {
+        italicBtn.classList.add('active');
+      } else {
+        italicBtn.classList.remove('active');
+      }
+
+      // Update underline button
+      const underlineBtn = document.querySelector('[onclick*="underline"]');
+      if (document.queryCommandState('underline')) {
+        underlineBtn.classList.add('active');
+      } else {
+        underlineBtn.classList.remove('active');
+      }
+    }
+
+    // Export to Word function
+    function exportToWord() {
+      // Get the HTML content from the editable div
+      const contentElement = document.getElementById('letterPreview');
+      const content = contentElement.innerHTML;
+      const filename = document.getElementById('filename').value || 'Visa_Cover_Letter';
+
+      // Construct the header necessary for Word to recognize the HTML as a Word document
+      const preHtml = `
+                <html xmlns:o='urn:schemas-microsoft-com:office:office' 
+                      xmlns:w='urn:schemas-microsoft-com:office:word' 
+                      xmlns='http://www.w3.org/TR/REC-html40'>
+                <head>
+                    <meta charset='utf-8'>
+                    <title>Visa Cover Letter</title>
+                    <style>
+                        /* These styles are embedded in the Word Doc */
+                        body { 
+                            font-family: 'Times New Roman', serif; 
+                            font-size: 12pt; 
+                            line-height: 1.5;
+                            
+                        }
+                        p { margin-bottom: 12pt; }
+                        table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+                        td, th { border: 1px solid #000; padding: 8px; }
+                        th { background-color: #e3f2fd; font-weight: bold; }
+                    </style>
+                </head>
+                <body>
+            `;
+
+      const postHtml = "</body></html>";
+
+      // Combine everything
+      const html = preHtml + content + postHtml;
+
+      // Create a Blob object
+      const blob = new Blob(['\ufeff', html], {
+        type: 'application/msword'
+      });
+
+      // Create a download link and trigger it programmatically
+      const url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html);
+
+      const downloadLink = document.createElement("a");
+      document.body.appendChild(downloadLink);
+
+      if (navigator.msSaveOrOpenBlob) {
+        navigator.msSaveOrOpenBlob(blob, filename + ".doc");
+      } else {
+        // Create a link to the file
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = filename + ".doc";
+
+        // Trigger the click
+        downloadLink.click();
+      }
+
+      // Cleanup
+      document.body.removeChild(downloadLink);
+      showToast('Document downloaded successfully!');
     }
 
     // Print the letter
@@ -2134,36 +2443,14 @@
 
       document.body.innerHTML = `
                 <style>
-                    body {
-                        font-family: 'Times New Roman', Times, serif;
-                        font-size: 12pt;
-                        line-height: 1.6;
-                        padding: 20px;
-                    }
-                    .highlight {
-                        padding: 0 2px;
-                        font-weight: bold;
-                    }
-                    .preview-table {
-                        width: 100%;
-                        border-collapse: collapse;
-                        margin: 15px 0;
-                        font-size: 12px;
-                    }
-                    .preview-table th {
-                        background: #e3f2fd;
-                        padding: 8px 12px;
-                        text-align: left;
-                        border: 1px solid #bbdefb;
-                    }
-                    .preview-table td {
-                        padding: 8px 12px;
-                        border: 1px solid #bbdefb;
+                    body { 
+                        font-family: 'Times New Roman', Times, serif; 
+                        font-size: 12pt; 
+                        line-height: 1.5;
+                        padding: 1in;
                     }
                     @media print {
-                        .no-print {
-                            display: none;
-                        }
+                        .no-print { display: none; }
                     }
                 </style>
                 <div>${printContent}</div>
@@ -2176,6 +2463,19 @@
 
       window.print();
       document.body.innerHTML = originalContent;
+    }
+
+    // Show toast notification
+    function showToast(message = 'Document downloaded successfully!') {
+      const toast = document.getElementById('toast');
+      const toastText = toast.querySelector('span');
+
+      toastText.textContent = message;
+      toast.classList.add('show');
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
     }
 
     // Initialize the form
@@ -2200,6 +2500,11 @@
       // Set date of issue to today
       document.getElementById('dateOfIssue').valueAsDate = today;
 
+      // Page reload korle ALWAYS new PNR generate korte hobe
+      // Eta korar jonno direct PNR generate kore dilam
+      originalAirlinePNR = generateAirlinePNR();
+      originalGalileoPNR = generateGalileoPNR();
+
       // First check if there's any saved application in localStorage
       const savedKeys = Object.keys(localStorage);
       const visaFormKeys = savedKeys.filter(key => key.startsWith('visaForm_'));
@@ -2209,22 +2514,11 @@
         const latestKey = visaFormKeys[visaFormKeys.length - 1];
         const savedData = JSON.parse(localStorage.getItem(latestKey));
 
-        // Extract PNRs from saved data
-        if (savedData.airlinePNR) {
-          const pnrMatch = savedData.airlinePNR.match(/(\w{6})/);
-          if (pnrMatch) {
-            originalAirlinePNR = pnrMatch[1];
-          }
-        }
-
-        if (savedData.galileoPNR) {
-          originalGalileoPNR = savedData.galileoPNR;
-        }
-
         // Set country and generate UUID
         setTimeout(() => {
           if (savedData.country) {
             document.getElementById('country').value = savedData.country;
+            // Generate UUID with NEW PNRs (reload er jonno always new)
             generateUUID();
             loadFromLocalStorage();
           } else {
@@ -2249,12 +2543,14 @@
 
       // Set default values for sample participant
       setTimeout(() => {
-        const nameInputs = document.querySelectorAll('.participant-name');
+        const givenNameInputs = document.querySelectorAll('.participant-given-name');
+        const surNameInputs = document.querySelectorAll('.participant-sur-name');
         const passportInputs = document.querySelectorAll('.participant-passport');
         const dobInputs = document.querySelectorAll('.participant-dob');
         const relationshipSelects = document.querySelectorAll('.participant-relationship');
 
-        if (nameInputs[0]) nameInputs[0].value = "Sarah Johnson";
+        if (givenNameInputs[0]) givenNameInputs[0].value = "Sarah";
+        if (surNameInputs[0]) surNameInputs[0].value = "Johnson";
         if (passportInputs[0]) passportInputs[0].value = "CD987654";
         if (dobInputs[0]) {
           const dob = new Date();
@@ -2278,10 +2574,16 @@
 
         // Update country labels
         updateCountryNameLabels();
-
         updateCompletion();
       }, 200);
+
+      // Set up event listeners for the editor toolbar
+      const letterPreview = document.getElementById('letterPreview');
+      letterPreview.addEventListener('keyup', updateToolbarStates);
+      letterPreview.addEventListener('mouseup', updateToolbarStates);
+      letterPreview.addEventListener('focus', updateToolbarStates);
     };
+
   </script>
 </body>
 
