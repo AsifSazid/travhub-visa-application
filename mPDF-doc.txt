@@ -1,0 +1,37 @@
+$defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
+$fontDirs = $defaultConfig['fontDir'];
+
+$defaultFontConfig = (new Mpdf\Config\FontVariables())->getDefaults();
+$fontData = $defaultFontConfig['fontdata'];
+
+$mpdf = new \Mpdf\Mpdf([
+    'mode' => 'utf-8',
+    'format' => 'A4',
+    'tempDir' => __DIR__ . '/tmp',
+    'fontDir' => array_merge($fontDirs, [
+        __DIR__ . '/fonts',
+    ]),
+    'fontdata' => $fontData + [
+        'poppins' => [
+            'R' => 'Poppins-Regular.ttf',
+            'B' => 'Poppins-SemiBold.ttf',
+            'I' => 'Poppins-Italic.ttf',
+            'BI' => 'Poppins-BoldItalic.ttf',
+        ]
+    ],
+    'default_font' => 'poppins'
+]);
+
+
+// Set document information
+$mpdf->SetTitle('Thai Visa Cover Letter - ' . $uuid);
+$mpdf->SetAuthor('Thai Visa Application System');
+$mpdf->SetCreator('TravHub Global Limited');
+$mpdf->SetSubject('Visa Application Cover Letter');
+
+
+// Set watermark (optional)
+$mpdf->SetWatermarkText('CONFIDENTIAL');
+$mpdf->showWatermarkText = true;
+$mpdf->watermark_font = 'DejaVuSansCondensed';
+$mpdf->watermarkTextAlpha = 0.1;

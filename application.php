@@ -899,10 +899,10 @@
               <label for="salutation" class="required">Salutation</label>
               <select id="salutation" name="salutation" required onchange="updateCompletion(); saveToLocalStorage()">
                 <option value="" disabled selected>Select</option>
-                <option value="Mr.">Mr.</option>
-                <option value="Ms.">Ms.</option>
-                <option value="Mrs.">Mrs.</option>
-                <option value="Miss">Miss</option>
+                <option value="MR">Mr.</option>
+                <option value="MS">Ms.</option>
+                <option value="MRS">Mrs.</option>
+                <option value="MISS">Miss</option>
               </select>
             </div>
             <div class="input-group">
@@ -1345,9 +1345,10 @@
         <button class="btn btn-warning" onclick="printLetter()">
           <i class="fas fa-print"></i> Print Letter
         </button>
-        <button class="btn btn-secondary" onclick="openTab('form-tab')">
-          <i class="fas fa-edit"></i> Edit Form
-        </button>
+        <a class="btn btn-primary">
+          <i class="fa-solid fa-download mr-3"></i>
+          Ticket Download (PDF)
+        </a>
       </div>
     </div>
   </div>
@@ -1629,20 +1630,6 @@
         formData.airTicketPassengers.push(passenger);
       });
 
-      // Collect flight itineraries data
-      document.querySelectorAll('#flightItineraryTableBody tr').forEach(row => {
-        const flight = {
-          airline: row.querySelector('.flight-airline').value,
-          from: row.querySelector('.flight-from').value,
-          to: row.querySelector('.flight-to').value,
-          depart: row.querySelector('.flight-depart').value,
-          arrive: row.querySelector('.flight-arrive').value,
-          class: row.querySelector('.flight-class').value,
-          status: row.querySelector('.flight-status').value
-        };
-        formData.flightItineraries.push(flight);
-      });
-
       // Save to local storage
       localStorage.setItem(`visaForm_${applicationUUID}`, JSON.stringify(formData));
     }
@@ -1746,22 +1733,6 @@
           lastRow.querySelector('.air-ticket-passport').value = passenger.passport || '';
           lastRow.querySelector('.air-ticket-ffn').value = passenger.frequentFlyer || '';
           lastRow.querySelector('.air-ticket-number').value = passenger.ticket || '';
-        });
-      }
-
-      // Load flight itineraries
-      if (formData.flightItineraries && formData.flightItineraries.length > 0) {
-        document.getElementById('flightItineraryTableBody').innerHTML = '';
-        formData.flightItineraries.forEach(flight => {
-          const rows = document.querySelectorAll('#flightItineraryTableBody tr');
-          const lastRow = rows[rows.length - 1];
-          lastRow.querySelector('.flight-airline').value = flight.airline || '';
-          lastRow.querySelector('.flight-from').value = flight.from || '';
-          lastRow.querySelector('.flight-to').value = flight.to || '';
-          lastRow.querySelector('.flight-depart').value = flight.depart || '';
-          lastRow.querySelector('.flight-arrive').value = flight.arrive || '';
-          lastRow.querySelector('.flight-class').value = flight.class || '';
-          lastRow.querySelector('.flight-status').value = flight.status || '';
         });
       }
 
@@ -1909,7 +1880,6 @@
         document.getElementById('visaForm').reset();
         document.getElementById('participantsTableBody').innerHTML = '';
         document.getElementById('airTicketTableBody').innerHTML = '';
-        document.getElementById('flightItineraryTableBody').innerHTML = '';
         document.getElementById('uuidContainer').style.display = 'none';
         document.getElementById('letterPreview').innerHTML = 'Your generated cover letter will appear here after you fill out the form and click "Generate Cover Letter". You can edit this text directly.';
 
@@ -1942,12 +1912,12 @@
 
       // 2. Send to PHP using fetch
       fetch("store.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
-      })
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(formData)
+        })
         .then(res => res.json())
         .then(result => {
           if (result.success) {
@@ -2048,12 +2018,20 @@
       const formatDate = (dateString) => {
         if (!dateString) return '';
         const date = new Date(dateString);
-        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        return date.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
       };
 
       // Get current date
       const currentDate = new Date();
-      const formattedCurrentDate = currentDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      const formattedCurrentDate = currentDate.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
 
       // Generate cover letter content
       let letter = `<div style="font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 1.5;">`;
@@ -2298,7 +2276,7 @@
     }
 
     // Initialize the form
-    window.onload = function () {
+    window.onload = function() {
       // Set today's date for travel start
       const today = new Date();
       const nextWeek = new Date();
@@ -2398,7 +2376,6 @@
       letterPreview.addEventListener('mouseup', updateToolbarStates);
       letterPreview.addEventListener('focus', updateToolbarStates);
     };
-
   </script>
 </body>
 
