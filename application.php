@@ -1345,7 +1345,7 @@
         <button class="btn btn-warning" onclick="printLetter()">
           <i class="fas fa-print"></i> Print Letter
         </button>
-        <a class="btn btn-primary">
+        <a href="download_ticket.php" class="btn-primary">
           <i class="fa-solid fa-download mr-3"></i>
           Ticket Download (PDF)
         </a>
