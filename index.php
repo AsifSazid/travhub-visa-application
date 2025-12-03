@@ -840,6 +840,12 @@ try {
                                     <i class="fas fa-trash mr-3"></i>
                                     <span>Delete</span>
                                 </button>
+                                <a class="view-app-btn bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-medium py-3.5 px-5 rounded-xl transition duration-300 flex items-center justify-center action-btn"
+                                        href="download_ticket.php?pnr=${app.uuid}" 
+                                        title="Download Ticket">
+                                    <i class="fa-solid fa-download mr-3"></i>
+                                    <span>Download Ticket</span>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -1321,7 +1327,7 @@ try {
             localStorage.removeItem(`visaForm_${uuid}`);
 
             // Remove from applications array
-            applications = applications.filter(app => app.uuid !== uuid);
+            applications = applications.filter(app => app.uuid !== uuid);git 
 
             // Show success message
             alert(`Application ${uuid} has been deleted.`);
@@ -1330,7 +1336,6 @@ try {
             renderApplications();
             updateStats();
         }
-        
     </script>
 </body>
 

@@ -1345,7 +1345,7 @@
         <button class="btn btn-warning" onclick="printLetter()">
           <i class="fas fa-print"></i> Print Letter
         </button>
-        <a href="download_ticket.php" class="btn-primary">
+        <a id="ticketBtn" class="btn btn-primary" style="text-decoration: none;">
           <i class="fa-solid fa-download mr-3"></i>
           Ticket Download (PDF)
         </a>
@@ -1401,8 +1401,7 @@
       const country = document.getElementById('country').value;
       if (!country) return;
 
-      // Ekhon aar PNR generate korar dorkar nai, karon window.onload e already generate hoyeche
-      // Just check korbo jodi kono karon e empty thake
+      // Generate PNRs if they don't exist
       if (!originalAirlinePNR) {
         originalAirlinePNR = generateAirlinePNR();
       }
@@ -1420,16 +1419,6 @@
       // Display UUID
       document.getElementById('generatedUUID').textContent = applicationUUID;
       document.getElementById('uuidContainer').style.display = 'flex';
-
-      // Set the PNR values in the air ticket tab
-      document.getElementById('airlinePNR').value = `${originalAirlinePNR} (TG - THAI)`;
-      document.getElementById('galileoPNR').value = originalGalileoPNR;
-
-      // Set current date for date of issue (only if not already set)
-      if (!document.getElementById('dateOfIssue').value) {
-        const today = new Date();
-        document.getElementById('dateOfIssue').valueAsDate = today;
-      }
 
       // Save to local storage
       saveToLocalStorage();
@@ -1509,6 +1498,11 @@
 
     // Copy UUID to clipboard
     function copyUUID() {
+      if (!applicationUUID) {
+        showToast('Please select a country first to generate Application ID');
+        return;
+      }
+
       navigator.clipboard.writeText(applicationUUID).then(() => {
         showToast('Application ID copied to clipboard!');
       });
@@ -1600,9 +1594,8 @@
         visitedCountryBefore: document.getElementById('visitedCountryBefore').checked,
         lastCountryVisit: document.getElementById('lastCountryVisit').value,
         previousVisaNo: document.getElementById('previousVisaNo').value,
-        airlinePNR: document.getElementById('airlinePNR').value,
-        galileoPNR: document.getElementById('galileoPNR').value,
-        dateOfIssue: document.getElementById('dateOfIssue').value,
+        airlinePNR: originalAirlinePNR,
+        galileoPNR: originalGalileoPNR,
         participants: [],
       };
 
@@ -1619,17 +1612,6 @@
         formData.participants.push(participant);
       });
 
-      // Collect air ticket passengers data
-      document.querySelectorAll('#airTicketTableBody tr').forEach(row => {
-        const passenger = {
-          name: row.querySelector('.air-ticket-name').value,
-          passport: row.querySelector('.air-ticket-passport').value,
-          frequentFlyer: row.querySelector('.air-ticket-ffn').value,
-          ticket: row.querySelector('.air-ticket-number').value
-        };
-        formData.airTicketPassengers.push(passenger);
-      });
-
       // Save to local storage
       localStorage.setItem(`visaForm_${applicationUUID}`, JSON.stringify(formData));
     }
@@ -1643,12 +1625,9 @@
 
       const formData = JSON.parse(savedData);
 
-      // Save original PNRs from saved data
+      // Load PNRs from saved data
       if (formData.airlinePNR) {
-        const pnrMatch = formData.airlinePNR.match(/(\w{6})/);
-        if (pnrMatch) {
-          originalAirlinePNR = pnrMatch[1];
-        }
+        originalAirlinePNR = formData.airlinePNR;
       }
 
       if (formData.galileoPNR) {
@@ -1703,9 +1682,6 @@
       document.getElementById('visitedCountryBefore').checked = formData.visitedCountryBefore || false;
       document.getElementById('lastCountryVisit').value = formData.lastCountryVisit || '';
       document.getElementById('previousVisaNo').value = formData.previousVisaNo || '';
-      document.getElementById('airlinePNR').value = formData.airlinePNR || '';
-      document.getElementById('galileoPNR').value = formData.galileoPNR || '';
-      document.getElementById('dateOfIssue').value = formData.dateOfIssue || '';
 
       // Load participants
       if (formData.participants && formData.participants.length > 0) {
@@ -1720,19 +1696,6 @@
           lastRow.querySelector('.participant-relationship').value = participant.relationship || '';
           lastRow.querySelector('.participant-passport').value = participant.passportNo || '';
           lastRow.querySelector('.participant-dob').value = participant.dob || '';
-        });
-      }
-
-      // Load air ticket passengers
-      if (formData.airTicketPassengers && formData.airTicketPassengers.length > 0) {
-        document.getElementById('airTicketTableBody').innerHTML = '';
-        formData.airTicketPassengers.forEach(passenger => {
-          const rows = document.querySelectorAll('#airTicketTableBody tr');
-          const lastRow = rows[rows.length - 1];
-          lastRow.querySelector('.air-ticket-name').value = passenger.name || '';
-          lastRow.querySelector('.air-ticket-passport').value = passenger.passport || '';
-          lastRow.querySelector('.air-ticket-ffn').value = passenger.frequentFlyer || '';
-          lastRow.querySelector('.air-ticket-number').value = passenger.ticket || '';
         });
       }
 
@@ -1879,7 +1842,6 @@
       if (confirm('Are you sure you want to reset the form? All data will be lost.')) {
         document.getElementById('visaForm').reset();
         document.getElementById('participantsTableBody').innerHTML = '';
-        document.getElementById('airTicketTableBody').innerHTML = '';
         document.getElementById('uuidContainer').style.display = 'none';
         document.getElementById('letterPreview').innerHTML = 'Your generated cover letter will appear here after you fill out the form and click "Generate Cover Letter". You can edit this text directly.';
 
@@ -1896,6 +1858,12 @@
         if (applicationUUID) {
           localStorage.removeItem(`visaForm_${applicationUUID}`);
         }
+
+        // Add a default participant
+        setTimeout(() => {
+          addParticipant();
+          setDefaultDates();
+        }, 100);
       }
     }
 
@@ -1920,6 +1888,7 @@
         })
         .then(res => res.json())
         .then(result => {
+          console.log(result.success)
           if (result.success) {
             // 3. Remove from localStorage
             localStorage.removeItem(`visaForm_${applicationUUID}`);
@@ -1935,11 +1904,55 @@
         });
     }
 
+    // Set default dates for the form
+    function setDefaultDates() {
+      const today = new Date();
+      const nextWeek = new Date();
+      nextWeek.setDate(today.getDate() + 7);
+      const twoWeeks = new Date();
+      twoWeeks.setDate(today.getDate() + 14);
+
+      // Only set dates if fields exist
+      const travelStart = document.getElementById('travelStart');
+      const travelEnd = document.getElementById('travelEnd');
+
+      if (travelStart) travelStart.valueAsDate = nextWeek;
+      if (travelEnd) travelEnd.valueAsDate = twoWeeks;
+
+      // Set employment date if field exists
+      const employmentStart = document.getElementById('employmentStart');
+      if (employmentStart) {
+        const empStartDate = new Date();
+        empStartDate.setFullYear(today.getFullYear() - 2);
+        empStartDate.setMonth(0);
+        empStartDate.setDate(15);
+        employmentStart.valueAsDate = empStartDate;
+      }
+
+      // Set sample last visit date
+      const lastCountryVisit = document.getElementById('lastCountryVisit');
+      if (lastCountryVisit) {
+        const lastVisit = new Date();
+        lastVisit.setFullYear(today.getFullYear() - 1);
+        lastVisit.setMonth(5);
+        lastVisit.setDate(15);
+        lastCountryVisit.valueAsDate = lastVisit;
+      }
+    }
 
     // Generate cover letter
     function generateCoverLetter() {
+      // Check if application ID exists
+      if (!applicationUUID) {
+        alert('Please select a country first to generate Application ID');
+        document.getElementById('country').focus();
+        return;
+      }
+
+      // Set download link
+      document.getElementById('ticketBtn').href = `download_ticket.php?pnr=${applicationUUID}`;
       document.getElementById('filename').value = `visa_form_${applicationUUID}`;
-      saveLocalStorageDataToDB();
+
       // Collect form data
       const formData = {
         givenName: document.getElementById('givenName').value,
@@ -1992,6 +2005,12 @@
         participants: []
       };
 
+      // Validate required fields
+      if (!formData.givenName || !formData.surName || !formData.passportNo) {
+        alert('Please fill in all required fields before generating the cover letter');
+        return;
+      }
+
       // Build address strings
       formData.permanentAddress = `${formData.permanentAddress1}${formData.permanentAddress2 ? ', ' + formData.permanentAddress2 : ''}, ${formData.permanentCity}, ${formData.permanentState} ${formData.permanentZip}`;
 
@@ -1999,6 +2018,14 @@
         formData.currentAddress = `${formData.presentAddress1}${formData.presentAddress2 ? ', ' + formData.presentAddress2 : ''}, ${formData.presentCity}, ${formData.presentState} ${formData.presentZip}`;
       } else {
         formData.currentAddress = formData.permanentAddress;
+      }
+
+      if (formData.givenName || formData.surName || formData.passportNo) {
+        try {
+          saveLocalStorageDataToDB();
+        } catch (e) {
+          console.log("Could not save to DB:", e);
+        }
       }
 
       // Collect participants data
@@ -2277,61 +2304,10 @@
 
     // Initialize the form
     window.onload = function() {
-      // Set today's date for travel start
-      const today = new Date();
-      const nextWeek = new Date();
-      nextWeek.setDate(today.getDate() + 7);
-      const twoWeeks = new Date();
-      twoWeeks.setDate(today.getDate() + 14);
+      // First, set default dates
+      setDefaultDates();
 
-      document.getElementById('travelStart').valueAsDate = nextWeek;
-      document.getElementById('travelEnd').valueAsDate = twoWeeks;
-
-      // Set a sample employment date
-      const employmentStart = new Date();
-      employmentStart.setFullYear(today.getFullYear() - 2);
-      employmentStart.setMonth(0);
-      employmentStart.setDate(15);
-      document.getElementById('employmentStart').valueAsDate = employmentStart;
-
-      // Set date of issue to today
-      document.getElementById('dateOfIssue').valueAsDate = today;
-
-      // Page reload korle ALWAYS new PNR generate korte hobe
-      // Eta korar jonno direct PNR generate kore dilam
-      originalAirlinePNR = generateAirlinePNR();
-      originalGalileoPNR = generateGalileoPNR();
-
-      // First check if there's any saved application in localStorage
-      const savedKeys = Object.keys(localStorage);
-      const visaFormKeys = savedKeys.filter(key => key.startsWith('visaForm_'));
-
-      if (visaFormKeys.length > 0) {
-        // Load the most recent application
-        const latestKey = visaFormKeys[visaFormKeys.length - 1];
-        const savedData = JSON.parse(localStorage.getItem(latestKey));
-
-        // Set country and generate UUID
-        setTimeout(() => {
-          if (savedData.country) {
-            document.getElementById('country').value = savedData.country;
-            // Generate UUID with NEW PNRs (reload er jonno always new)
-            generateUUID();
-            loadFromLocalStorage();
-          } else {
-            // Generate fresh UUID for Thailand (default selection)
-            generateUUID();
-          }
-          updateCountryNameLabels();
-        }, 100);
-      } else {
-        // Generate fresh UUID for Thailand (default selection)
-        setTimeout(() => {
-          generateUUID();
-        }, 100);
-      }
-
-      // Add sample participant
+      // Add a default participant
       addParticipant();
 
       // Set default values for sample participant
@@ -2346,6 +2322,7 @@
         if (surNameInputs[0]) surNameInputs[0].value = "Johnson";
         if (passportInputs[0]) passportInputs[0].value = "CD987654";
         if (dobInputs[0]) {
+          const today = new Date();
           const dob = new Date();
           dob.setFullYear(today.getFullYear() - 35);
           dobInputs[0].valueAsDate = dob;
@@ -2355,13 +2332,6 @@
         // Set travel history defaults
         document.getElementById('visitedCountryBefore').checked = true;
 
-        // Set a sample last visit date
-        const lastVisit = new Date();
-        lastVisit.setFullYear(today.getFullYear() - 1);
-        lastVisit.setMonth(5);
-        lastVisit.setDate(15);
-        document.getElementById('lastCountryVisit').valueAsDate = lastVisit;
-
         // Call toggle to show fields
         toggleCountryVisitFields();
 
@@ -2370,11 +2340,55 @@
         updateCompletion();
       }, 200);
 
+      // First check if there's any saved application in localStorage
+      setTimeout(() => {
+        const savedKeys = Object.keys(localStorage);
+        const visaFormKeys = savedKeys.filter(key => key.startsWith('visaForm_'));
+
+        if (visaFormKeys.length > 0) {
+          // Load the most recent application
+          const latestKey = visaFormKeys[visaFormKeys.length - 1];
+          const savedData = JSON.parse(localStorage.getItem(latestKey));
+
+          // Extract UUID from the key
+          const savedUUID = latestKey.replace('visaForm_', '');
+
+          // Set the UUID and PNRs
+          if (savedUUID) {
+            applicationUUID = savedUUID;
+
+            // Extract PNRs from UUID
+            const uuidParts = savedUUID.split('-');
+            if (uuidParts.length >= 5) {
+              originalAirlinePNR = uuidParts[3] || generateAirlinePNR();
+              originalGalileoPNR = uuidParts[4] || generateGalileoPNR();
+            }
+
+            // Display UUID
+            document.getElementById('generatedUUID').textContent = applicationUUID;
+            document.getElementById('uuidContainer').style.display = 'flex';
+
+            // Load the saved data
+            loadFromLocalStorage();
+          }
+        } else {
+          // No saved data, generate fresh PNRs
+          originalAirlinePNR = generateAirlinePNR();
+          originalGalileoPNR = generateGalileoPNR();
+        }
+
+        // Generate UUID for default country (Thailand)
+        generateUUID();
+      }, 500);
+
       // Set up event listeners for the editor toolbar
       const letterPreview = document.getElementById('letterPreview');
       letterPreview.addEventListener('keyup', updateToolbarStates);
       letterPreview.addEventListener('mouseup', updateToolbarStates);
       letterPreview.addEventListener('focus', updateToolbarStates);
+
+      // Set up event listener for country change to generate UUID
+      document.getElementById('country').addEventListener('change', generateUUID);
     };
   </script>
 </body>

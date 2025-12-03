@@ -12,7 +12,7 @@ if (!$data) {
 
 try {
     $stmt = $pdo->prepare("
-        INSERT INTO applications (`uuid`, `applicantion_data`, `timestamp`)
+        INSERT INTO applications (`uuid`, `application_data`, `timestamp`)
         VALUES (?, ?, ?)
     ");
 
