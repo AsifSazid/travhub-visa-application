@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thai Visa Cover Letter Generator</title>
+  <title>Visa Cover Letter Generator</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
@@ -832,8 +832,8 @@
   <div class="container">
     <header>
       <div class="header-overlay"></div>
-      <h1><i class="fas fa-file-contract"></i> Thai Visa Cover Letter Generator</h1>
-      <p>Create professional visa application letters for Thailand in minutes. Fill in your details and generate a
+      <h1><i class="fas fa-file-contract"></i>Visa Cover Letter Generator</h1>
+      <p>Create professional visa application letters for Thailand/Malaysia in minutes. Fill in your details and generate a
         customized cover letter.</p>
     </header>
 
@@ -880,9 +880,9 @@
                 <option value="">Select Country</option>
                 <option value="Malaysia">Malaysia</option>
                 <option value="Thailand" selected>Thailand</option>
-                <option value="Singapore">Singapore</option>
+                <!-- <option value="Singapore">Singapore</option>
                 <option value="Vietnam">Vietnam</option>
-                <option value="Indonesia">Indonesia</option>
+                <option value="Indonesia">Indonesia</option> -->
               </select>
             </div>
             <div class="input-group">
