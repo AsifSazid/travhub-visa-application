@@ -247,8 +247,8 @@ try {
                         <i class="fas fa-plane text-white text-lg"></i>
                     </div>
                 </div>
-                <h1 class="text-4xl font-bold text-gray-800 mb-3 bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">Thai Visa Applications</h1>
-                <p class="text-gray-600 max-w-2xl text-lg">Generate professional visa application letters for Thailand. Manage all your saved applications in one place.</p>
+                <h1 class="text-4xl font-bold text-gray-800 mb-3 bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">Visa Applications</h1>
+                <p class="text-gray-600 max-w-2xl text-lg">Generate professional visa application letters for Any Country. Manage all your saved applications in one place.</p>
             </div>
         </header>
 
@@ -309,7 +309,7 @@ try {
                 <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center">
                     <div class="mb-6 lg:mb-0">
                         <h2 class="text-2xl font-bold text-gray-800 mb-2">Saved Applications</h2>
-                        <p class="text-gray-600">Your Thai visa applications from database and local storage</p>
+                        <p class="text-gray-600">Your visa applications from database and local storage</p>
                     </div>
                     <div class="flex flex-wrap gap-4">
                         <button id="refresh-btn" class="bg-white hover:bg-gray-50 text-gray-800 font-medium py-3 px-5 rounded-xl transition duration-300 flex items-center shadow-sm border border-gray-200 action-btn">
@@ -1303,7 +1303,7 @@ try {
                 const app = applications.find(a => a.uuid === uuid && a.source !== 'local');
                 if (app) {
                     // Redirect to view page or edit page
-                    window.location.href = `edit-application.php?uuid=${encodeURIComponent(uuid)}`;
+                    window.location.href = `application.php?uuid=${encodeURIComponent(uuid)}`;
                 } else {
                     alert('Application data not found. Creating new application...');
                     createNewApplication();
