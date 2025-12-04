@@ -13,16 +13,19 @@ if (!$data) {
 try {
     $stmt = $pdo->prepare("
         INSERT INTO applications (`uuid`, `application_data`, `timestamp`)
-        VALUES (?, ?, ?)
+        VALUES (:uuid, :data, :ts)
+        ON DUPLICATE KEY UPDATE
+            application_data = :data,
+            timestamp = :ts
     ");
 
     $stmt->execute([
-        $data['uuid'],
-        json_encode($data),
-        date('Y-m-d H:i:s') // use current timestamp
+        ':uuid' => $data['uuid'],
+        ':data' => json_encode($data),
+        ':ts'   => date('Y-m-d H:i:s')
     ]);
 
-    echo json_encode(["status" => "success", "message" => "Data saved successfully"]);
+    echo json_encode(["status" => "success", "message" => "Data saved/updated successfully"]);
 } catch (Exception $e) {
     echo json_encode(["status" => "error", "message" => $e->getMessage()]);
 }
