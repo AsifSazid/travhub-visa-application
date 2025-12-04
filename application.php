@@ -897,7 +897,7 @@
             </div>
             <div class="input-group">
               <label for="salutation" class="required">Salutation</label>
-              <select id="salutation" name="salutation" required onchange="updateCompletion(); saveToLocalStorage()">
+              <select id="salutation" required onchange="updateCompletion(); saveToLocalStorage()">
                 <option value="" disabled selected>Select</option>
                 <option value="MR">Mr.</option>
                 <option value="MS">Ms.</option>
@@ -1345,7 +1345,7 @@
         <button class="btn btn-warning" onclick="printLetter()">
           <i class="fas fa-print"></i> Print Letter
         </button>
-        <a id="ticketBtn" class="btn btn-primary" style="text-decoration: none;">
+        <a id="ticketBtn" class="btn btn-primary" style="text-decoration: none;" target="_blank">
           <i class="fa-solid fa-download mr-3"></i>
           Ticket Download (PDF)
         </a>
@@ -1550,6 +1550,7 @@
         country: document.getElementById('country').value,
         givenName: document.getElementById('givenName').value,
         surName: document.getElementById('surName').value,
+        salutation: document.getElementById('salutation').value,
         nationality: document.getElementById('nationality').value,
         passportNo: document.getElementById('passportNo').value,
         mobile: document.getElementById('mobile').value,
