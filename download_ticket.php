@@ -350,7 +350,7 @@ try {
                                     <td><strong><?php echo formatDateTime($appData['travelStart']); ?><br><br>06:15</strong></td>
 
                                     <td></td>
-                                    <td>Baggage : <br>Class : W-Economy <br>Duration : 2h 30m <br>Status : Confirmed <br>Aircraft : A320</td>
+                                    <td>Baggage : <br>Class : W-Economy <br>Duration : 2h 30m <br>Status : Confirmed <br>Aircraft : Airbus Industrie A320-100/200 <br> Special Svc : </td>
                                 </tr>
 
                                 <!-- RETURN -->
@@ -368,7 +368,7 @@ try {
                                     <td style="border-top: 1px solid;"><strong><?php echo formatDateTime(date('Y-m-d', strtotime($appData['travelEnd'] . ' +1 day'))); ?><br><br>01:25</strong></td>
 
                                     <td style="border-top: 1px solid;"></td>
-                                    <td style="border-top: 1px solid;">Baggage : <br>Class : W-Economy <br>Duration : 2h 35m <br>Status : Confirmed <br>Aircraft : A320</td>
+                                    <td>Baggage : <br>Class : W-Economy <br>Duration : 2h 35m <br>Status : Confirmed <br>Aircraft : Airbus Industrie A320-100/200 <br> Special Svc : </td>
                                 </tr>
 
                             <?php elseif ($appData['country'] == "Malaysia"): ?>
@@ -384,11 +384,11 @@ try {
                                     <td><strong>Dhaka</strong> - Hazrat Shahjalal Intl Arpt, Terminal 2</td>
                                     <td><strong>Kuala Lumpur</strong> - KL International Arpt Terminal 1</td>
 
-                                    <td><strong><?php echo formatDateTime($appData['travelStart']); ?><br><br>02:45</strong></td>
-                                    <td><strong><?php echo formatDateTime($appData['travelStart']); ?><br><br>06:15</strong></td>
+                                    <td><strong><?php echo formatDateTime($appData['travelStart']); ?><br><br>12:15</strong></td>
+                                    <td><strong><?php echo formatDateTime($appData['travelStart']); ?><br><br>18:15</strong></td>
 
                                     <td></td>
-                                    <td>Baggage : <br>Class : W-Economy <br>Duration : 2h 30m <br>Status : Confirmed <br>Aircraft : A320</td>
+                                    <td>Baggage : 25K<br>Class : V-Economy <br>Duration : 4h 0m <br>Status : <br>Aircraft : Boeing 737 Passenger Jet <br> Special Svc :  </td>
                                 </tr>
 
                                 <!-- RETURN -->
@@ -402,11 +402,11 @@ try {
                                     <td style="border-top: 1px solid;"><strong>Kuala Lumpur</strong> - KL International Arpt Terminal 1</td>
                                     <td style="border-top: 1px solid;"><strong>Dhaka</strong> - Hazrat Shahjalal Intl Arpt, Terminal 2</td>
 
-                                    <td style="border-top: 1px solid;"><strong><?php echo formatDateTime($appData['travelEnd']); ?><br><br>23:50</strong></td>
-                                    <td style="border-top: 1px solid;"><strong><?php echo formatDateTime(date('Y-m-d', strtotime($appData['travelEnd'] . ' +1 day'))); ?><br><br>01:25</strong></td>
+                                    <td style="border-top: 1px solid;"><strong><?php echo formatDateTime($appData['travelEnd']); ?><br><br>23:00</strong></td>
+                                    <td style="border-top: 1px solid;"><strong><?php echo formatDateTime(date('Y-m-d', strtotime($appData['travelEnd'] . ' +1 day'))); ?><br><br>00:55</strong></td>
 
                                     <td style="border-top: 1px solid;"></td>
-                                    <td style="border-top: 1px solid;">Baggage : <br>Class : W-Economy <br>Duration : 2h 35m <br>Status : Confirmed <br>Aircraft : A320</td>
+                                    <td>Baggage : 25K<br>Class : V-Economy <br>Duration : 3h 55m <br>Status : <br>Aircraft : Airbus Industrie A330-200 <br> Special Svc :  </td>
                                 </tr>
 
                             <?php endif; ?>
