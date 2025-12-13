@@ -311,7 +311,7 @@ try {
                         <tr>
                             <td><strong><?php echo htmlspecialchars($appData['airlinePNR'] ?? ''); ?></td>
                             <td><?php echo htmlspecialchars($appData['galileoPNR'] ?? ''); ?></td>
-                            <td><?php echo formatDate($appData['dateOfIssue'] ?? ''); ?></td>
+                            <td><?php echo formatDate($row['created_at'] ?? ''); ?></td>
                         </tr>
                     </tbody>
                 </table>
