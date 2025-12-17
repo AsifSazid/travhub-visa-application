@@ -1681,6 +1681,7 @@ $formDataJson = $formData ? json_encode($formData) : 'null';
       document.getElementById('country').value = formData.country || '';
       document.getElementById('givenName').value = formData.givenName || '';
       document.getElementById('surName').value = formData.surName || '';
+      document.getElementById('salutation').value = formData.salutation || '';
       document.getElementById('nationality').value = formData.nationality || '';
       document.getElementById('passportNo').value = formData.passportNo || '';
       document.getElementById('mobile').value = formData.mobile || '';
@@ -1931,13 +1932,11 @@ $formDataJson = $formData ? json_encode($formData) : 'null';
         })
         .then(res => res.json())
         .then(result => {
-          console.log(result.success)
-          if (result.success) {
+          if (result.status === 'success') {
             // 3. Remove from localStorage
             localStorage.removeItem(`visaForm_${applicationUUID}`);
             alert("Saved in DB & localStorage cleared!");
           } else {
-            console.log(result);
             alert("Database save failed: " + result.message);
           }
         })
@@ -1992,9 +1991,11 @@ $formDataJson = $formData ? json_encode($formData) : 'null';
         return;
       }
 
+      const userName = document.getElementById('surName').value;
+
       // Set download link
       document.getElementById('ticketBtn').href = `download_ticket.php?pnr=${applicationUUID}`;
-      document.getElementById('filename').value = `visa_form_${applicationUUID}`;
+      document.getElementById('filename').value = `visa_form_${userName}_${applicationUUID}`;
 
       // Collect form data
       const formData = {
