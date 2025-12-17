@@ -258,25 +258,24 @@ try {
         <div class="container">
             <!-- Content -->
             <div class="content">
-
-                <?php if (isset($appData['participants']) && !empty($appData['participants'])): ?>
-                    <p><strong>Itinerary</strong></p>
-                    <table class="applicant-table">
-                        <thead>
-                            <tr>
-                                <th style="width: 35%;">Name</th>
-                                <th style="width: 20%;">Passport No.</th>
-                                <th style="width: 20%;">Frequent Flyer Number</th>
-                                <th style="width: 25%;">Ticket</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><?php echo htmlspecialchars(($appData['surName'] ?? '') . '/' . ($appData['givenName']  ?? '') . ' ' . ($appData['salutation']  ?? '')); ?></td>
-                                <td><?php echo htmlspecialchars($appData['passportNo'] ?? ''); ?></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                <p><strong>Itinerary</strong></p>
+                <table class="applicant-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 35%;">Name</th>
+                            <th style="width: 20%;">Passport No.</th>
+                            <th style="width: 20%;">Frequent Flyer Number</th>
+                            <th style="width: 25%;">Ticket</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><?php echo htmlspecialchars(($appData['surName'] ?? '') . '/' . ($appData['givenName']  ?? '') . ' ' . ($appData['salutation']  ?? '')); ?></td>
+                            <td><?php echo htmlspecialchars($appData['passportNo'] ?? ''); ?></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <?php if (isset($appData['participants']) && !empty($appData['participants'])): ?>
                             <?php foreach ($appData['participants'] as $index => $participant): ?>
                                 <tr>
                                     <td style="border-top: 1px solid;">
@@ -295,9 +294,9 @@ try {
                                     <td style="border-top: 1px solid;"><?php echo formatDate($participant[''] ?? ''); ?></td>
                                 </tr>
                             <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                <?php endif; ?>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
 
                 <table class="applicant-table">
                     <thead>
@@ -368,7 +367,7 @@ try {
                                     <td style="border-top: 1px solid;"><strong><?php echo formatDateTime(date('Y-m-d', strtotime($appData['travelEnd'] . ' +1 day'))); ?><br><br>01:25</strong></td>
 
                                     <td style="border-top: 1px solid;"></td>
-                                    <td>Baggage : <br>Class : W-Economy <br>Duration : 2h 35m <br>Status : Confirmed <br>Aircraft : Airbus Industrie A320-100/200 <br> Special Svc : </td>
+                                    <td style="border-top: 1px solid;">Baggage : <br>Class : W-Economy <br>Duration : 2h 35m <br>Status : Confirmed <br>Aircraft : Airbus Industrie A320-100/200 <br> Special Svc : </td>
                                 </tr>
 
                             <?php elseif ($appData['country'] == "Malaysia"): ?>
@@ -388,7 +387,7 @@ try {
                                     <td><strong><?php echo formatDateTime($appData['travelStart']); ?><br><br>18:15</strong></td>
 
                                     <td></td>
-                                    <td>Baggage : 25K<br>Class : V-Economy <br>Duration : 4h 0m <br>Status : <br>Aircraft : Boeing 737 Passenger Jet <br> Special Svc :  </td>
+                                    <td>Baggage : 25K<br>Class : V-Economy <br>Duration : 4h 0m <br>Status : <br>Aircraft : Boeing 737 Passenger Jet <br> Special Svc : </td>
                                 </tr>
 
                                 <!-- RETURN -->
@@ -406,7 +405,7 @@ try {
                                     <td style="border-top: 1px solid;"><strong><?php echo formatDateTime(date('Y-m-d', strtotime($appData['travelEnd'] . ' +1 day'))); ?><br><br>00:55</strong></td>
 
                                     <td style="border-top: 1px solid;"></td>
-                                    <td>Baggage : 25K<br>Class : V-Economy <br>Duration : 3h 55m <br>Status : <br>Aircraft : Airbus Industrie A330-200 <br> Special Svc :  </td>
+                                    <td style="border-top: 1px solid;">Baggage : 25K<br>Class : V-Economy <br>Duration : 3h 55m <br>Status : <br>Aircraft : Airbus Industrie A330-200 <br> Special Svc : </td>
                                 </tr>
 
                             <?php endif; ?>

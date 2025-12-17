@@ -1,3 +1,35 @@
+<?php
+require 'server/db_connection.php';
+$uuid = isset($_GET['uuid']) ? $_GET['uuid'] : '';
+$formData = null;
+$dataSource = '';
+
+// If UUID exists in URL, try to load from database
+if (!empty($uuid)) {
+  try {
+    // Fetch data from database
+    $stmt = $pdo->prepare("SELECT * FROM applications WHERE uuid = :uuid");
+    $stmt->bindParam(':uuid', $uuid);
+    $stmt->execute();
+
+
+    $application = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($application) {
+      $formData = json_decode($application['application_data'], true);
+      $dataSource = 'database';
+    }
+  } catch (PDOException $e) {
+    // Database error - silently continue
+    error_log("Database error: " . $e->getMessage());
+  }
+}
+
+// Convert formData to JSON for JavaScript
+$formDataJson = $formData ? json_encode($formData) : 'null';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -1360,6 +1392,8 @@
   </div>
 
   <script>
+    const urlUUID = "<?php echo addslashes($uuid); ?>";
+
     // Global variables
     let applicationUUID = '';
     let originalAirlinePNR = '';
@@ -1619,14 +1653,22 @@
 
     // Load form data from local storage
     function loadFromLocalStorage() {
-      if (!applicationUUID) return;
+      if (!urlUUID) return;
 
-      const savedData = localStorage.getItem(`visaForm_${applicationUUID}`);
-      if (!savedData) return;
+      const savedData = localStorage.getItem(`visaForm_${urlUUID}`);
 
-      const formData = JSON.parse(savedData);
+      let phpData = <?php echo $formDataJson; ?>;
 
-      // Load PNRs from saved data
+      let formData;
+
+      if (phpData) {
+        formData = phpData;
+      } else if (savedData) {
+        formData = JSON.parse(savedData);
+      } else {
+        return; // Kono data-i nei
+      }
+
       if (formData.airlinePNR) {
         originalAirlinePNR = formData.airlinePNR;
       }
